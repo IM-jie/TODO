@@ -18,7 +18,7 @@ import java.util.List;
  **/
 @RestController
 @ResponseBody
-@RequestMapping("/test")
+@RequestMapping("/todo")
 public class UserController {
 
     @Reference
