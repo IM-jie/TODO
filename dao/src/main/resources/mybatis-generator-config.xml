@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+
+    <!--<classPathEntry location="E:/mine/common/maven/maven-mahout-data/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.jar" />-->
+    <classPathEntry location="D:/maven/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar" />
+
+    <context id="mysqlTables" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+            <property name="useToStringFromRoot" value="true" />
+        </plugin>
+
+        <commentGenerator>
+            <!--关闭自动生成注释-->
+            <property name="suppressAllComments" value="true" />
+            <property name="suppressDefaultComments" value="true" />
+            <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.demo.entity" targetProject="entity/src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.demo.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <table tableName="provin" domainObjectName="Provinces" enableSelectByExample="false"
+               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+            <!--<columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+        </table>
+    </context>
+</generatorConfiguration>
