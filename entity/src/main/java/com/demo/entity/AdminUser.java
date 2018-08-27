@@ -27,7 +27,7 @@ public class AdminUser {
 
     private String salt;
 
-    private Byte permissionid;
+    private Integer permissionid;
 
     private String group;
 
@@ -131,11 +131,11 @@ public class AdminUser {
         this.salt = salt == null ? null : salt.trim();
     }
 
-    public Byte getPermissionid() {
+    public Integer getPermissionid() {
         return permissionid;
     }
 
-    public void setPermissionid(Byte permissionid) {
+    public void setPermissionid(Integer permissionid) {
         this.permissionid = permissionid;
     }
 
