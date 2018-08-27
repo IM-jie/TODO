@@ -7,7 +7,7 @@
 
 
     <!--<classPathEntry location="E:/mine/common/maven/maven-mahout-data/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.jar" />-->
-    <classPathEntry location="D:/maven/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar" />
+    <classPathEntry location="/Users/mac/Project/lib/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46.jar"  />
 
     <context id="mysqlTables" targetRuntime="MyBatis3">
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
@@ -22,7 +22,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/mytodo?characterEncoding=utf8"
                         userId="root"
                         password="123456">
         </jdbcConnection>
@@ -45,7 +45,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="provin" domainObjectName="Provinces" enableSelectByExample="false"
+        <table tableName="t_admin_user" domainObjectName="AdminUser" enableSelectByExample="false"
                enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
             <!--<columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
