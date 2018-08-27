@@ -3,25 +3,25 @@
 <mapper namespace="com.demo.dao.AdminUserMapper" >
   <resultMap id="BaseResultMap" type="com.demo.entity.AdminUser" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
     <result column="mail" property="mail" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="phone_copy" property="phoneCopy" jdbcType="VARCHAR" />
-    <result column="empno" property="empno" jdbcType="VARCHAR" />
-    <result column="blogname" property="blogname" jdbcType="VARCHAR" />
+    <result column="emp_no" property="empNo" jdbcType="VARCHAR" />
+    <result column="blog_name" property="blogName" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
-    <result column="permissionid" property="permissionid" jdbcType="TINYINT" />
+    <result column="permission_id" property="permissionId" jdbcType="TINYINT" />
     <result column="group_type" property="groupType" jdbcType="VARCHAR" />
-    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, userid, username, pinyin, mail, phone, phone_copy, empno, blogname, remark, password, 
-    salt, permissionid, group_type, creater, create_time
+    id, user_id, username, pinyin, mail, phone, phone_copy, emp_no, blog_name, remark, 
+    password, salt, permission_id, group_type, creator, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -37,17 +37,17 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_admin_user (userid, username, pinyin, 
+    insert into t_admin_user (user_id, username, pinyin, 
       mail, phone, phone_copy, 
-      empno, blogname, remark, 
-      password, salt, permissionid, 
-      group_type, creater, create_time
+      emp_no, blog_name, remark, 
+      password, salt, permission_id, 
+      group_type, creator, create_time
       )
-    values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{pinyin,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{pinyin,jdbcType=VARCHAR}, 
       #{mail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{phoneCopy,jdbcType=VARCHAR}, 
-      #{empno,jdbcType=VARCHAR}, #{blogname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{permissionid,jdbcType=TINYINT}, 
-      #{groupType,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{empNo,jdbcType=VARCHAR}, #{blogName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{permissionId,jdbcType=TINYINT}, 
+      #{groupType,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.demo.entity.AdminUser" >
@@ -56,8 +56,8 @@
     </selectKey>
     insert into t_admin_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        userid,
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="username != null" >
         username,
@@ -74,11 +74,11 @@
       <if test="phoneCopy != null" >
         phone_copy,
       </if>
-      <if test="empno != null" >
-        empno,
+      <if test="empNo != null" >
+        emp_no,
       </if>
-      <if test="blogname != null" >
-        blogname,
+      <if test="blogName != null" >
+        blog_name,
       </if>
       <if test="remark != null" >
         remark,
@@ -89,22 +89,22 @@
       <if test="salt != null" >
         salt,
       </if>
-      <if test="permissionid != null" >
-        permissionid,
+      <if test="permissionId != null" >
+        permission_id,
       </if>
       <if test="groupType != null" >
         group_type,
       </if>
-      <if test="creater != null" >
-        creater,
+      <if test="creator != null" >
+        creator,
       </if>
       <if test="createTime != null" >
         create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        #{userid,jdbcType=VARCHAR},
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
@@ -121,11 +121,11 @@
       <if test="phoneCopy != null" >
         #{phoneCopy,jdbcType=VARCHAR},
       </if>
-      <if test="empno != null" >
-        #{empno,jdbcType=VARCHAR},
+      <if test="empNo != null" >
+        #{empNo,jdbcType=VARCHAR},
       </if>
-      <if test="blogname != null" >
-        #{blogname,jdbcType=VARCHAR},
+      <if test="blogName != null" >
+        #{blogName,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -136,14 +136,14 @@
       <if test="salt != null" >
         #{salt,jdbcType=VARCHAR},
       </if>
-      <if test="permissionid != null" >
-        #{permissionid,jdbcType=TINYINT},
+      <if test="permissionId != null" >
+        #{permissionId,jdbcType=TINYINT},
       </if>
       <if test="groupType != null" >
         #{groupType,jdbcType=VARCHAR},
       </if>
-      <if test="creater != null" >
-        #{creater,jdbcType=VARCHAR},
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -153,8 +153,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.AdminUser" >
     update t_admin_user
     <set >
-      <if test="userid != null" >
-        userid = #{userid,jdbcType=VARCHAR},
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
@@ -171,11 +171,11 @@
       <if test="phoneCopy != null" >
         phone_copy = #{phoneCopy,jdbcType=VARCHAR},
       </if>
-      <if test="empno != null" >
-        empno = #{empno,jdbcType=VARCHAR},
+      <if test="empNo != null" >
+        emp_no = #{empNo,jdbcType=VARCHAR},
       </if>
-      <if test="blogname != null" >
-        blogname = #{blogname,jdbcType=VARCHAR},
+      <if test="blogName != null" >
+        blog_name = #{blogName,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
@@ -186,14 +186,14 @@
       <if test="salt != null" >
         salt = #{salt,jdbcType=VARCHAR},
       </if>
-      <if test="permissionid != null" >
-        permissionid = #{permissionid,jdbcType=TINYINT},
+      <if test="permissionId != null" >
+        permission_id = #{permissionId,jdbcType=TINYINT},
       </if>
       <if test="groupType != null" >
         group_type = #{groupType,jdbcType=VARCHAR},
       </if>
-      <if test="creater != null" >
-        creater = #{creater,jdbcType=VARCHAR},
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -203,20 +203,20 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.demo.entity.AdminUser" >
     update t_admin_user
-    set userid = #{userid,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       pinyin = #{pinyin,jdbcType=VARCHAR},
       mail = #{mail,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       phone_copy = #{phoneCopy,jdbcType=VARCHAR},
-      empno = #{empno,jdbcType=VARCHAR},
-      blogname = #{blogname,jdbcType=VARCHAR},
+      emp_no = #{empNo,jdbcType=VARCHAR},
+      blog_name = #{blogName,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
-      permissionid = #{permissionid,jdbcType=TINYINT},
+      permission_id = #{permissionId,jdbcType=TINYINT},
       group_type = #{groupType,jdbcType=VARCHAR},
-      creater = #{creater,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

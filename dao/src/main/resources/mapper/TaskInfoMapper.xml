@@ -3,9 +3,9 @@
 <mapper namespace="com.demo.dao.TaskInfoMapper" >
   <resultMap id="BaseResultMap" type="com.demo.entity.TaskInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="taskid" property="taskid" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
     <result column="finisher" property="finisher" jdbcType="VARCHAR" />
     <result column="worker" property="worker" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="TINYINT" />
@@ -17,10 +17,14 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
     <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+    <result column="finisher_id" property="finisherId" jdbcType="VARCHAR" />
+    <result column="worker_id" property="workerId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, taskid, content, creater, finisher, worker, status, private_status, mark_status, 
-    priority, start_time, end_time, create_time, finish_time, comment_count
+    id, task_id, content, creator, finisher, worker, status, private_status, mark_status, 
+    priority, start_time, end_time, create_time, finish_time, comment_count, creator_id, 
+    finisher_id, worker_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -36,16 +40,18 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_task_info (taskid, content, creater, 
+    insert into t_task_info (task_id, content, creator, 
       finisher, worker, status, 
       private_status, mark_status, priority, 
       start_time, end_time, create_time, 
-      finish_time, comment_count)
-    values (#{taskid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
+      finish_time, comment_count, creator_id, 
+      finisher_id, worker_id)
+    values (#{taskId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
       #{finisher,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
       #{privateStatus,jdbcType=TINYINT}, #{markStatus,jdbcType=TINYINT}, #{priority,jdbcType=TINYINT}, 
       #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{finishTime,jdbcType=TIMESTAMP}, #{commentCount,jdbcType=INTEGER})
+      #{finishTime,jdbcType=TIMESTAMP}, #{commentCount,jdbcType=INTEGER}, #{creatorId,jdbcType=VARCHAR}, 
+      #{finisherId,jdbcType=VARCHAR}, #{workerId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.demo.entity.TaskInfo" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -53,14 +59,14 @@
     </selectKey>
     insert into t_task_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="taskid != null" >
-        taskid,
+      <if test="taskId != null" >
+        task_id,
       </if>
       <if test="content != null" >
         content,
       </if>
-      <if test="creater != null" >
-        creater,
+      <if test="creator != null" >
+        creator,
       </if>
       <if test="finisher != null" >
         finisher,
@@ -95,16 +101,25 @@
       <if test="commentCount != null" >
         comment_count,
       </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="finisherId != null" >
+        finisher_id,
+      </if>
+      <if test="workerId != null" >
+        worker_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="taskid != null" >
-        #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="creater != null" >
-        #{creater,jdbcType=VARCHAR},
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
       </if>
       <if test="finisher != null" >
         #{finisher,jdbcType=VARCHAR},
@@ -139,19 +154,28 @@
       <if test="commentCount != null" >
         #{commentCount,jdbcType=INTEGER},
       </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="finisherId != null" >
+        #{finisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workerId != null" >
+        #{workerId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskInfo" >
     update t_task_info
     <set >
-      <if test="taskid != null" >
-        taskid = #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="creater != null" >
-        creater = #{creater,jdbcType=VARCHAR},
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="finisher != null" >
         finisher = #{finisher,jdbcType=VARCHAR},
@@ -186,14 +210,23 @@
       <if test="commentCount != null" >
         comment_count = #{commentCount,jdbcType=INTEGER},
       </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="finisherId != null" >
+        finisher_id = #{finisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workerId != null" >
+        worker_id = #{workerId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskInfo" >
     update t_task_info
-    set taskid = #{taskid,jdbcType=VARCHAR},
+    set task_id = #{taskId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
-      creater = #{creater,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
       finisher = #{finisher,jdbcType=VARCHAR},
       worker = #{worker,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
@@ -204,7 +237,10 @@
       end_time = #{endTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       finish_time = #{finishTime,jdbcType=TIMESTAMP},
-      comment_count = #{commentCount,jdbcType=INTEGER}
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      finisher_id = #{finisherId,jdbcType=VARCHAR},
+      worker_id = #{workerId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -6,17 +6,17 @@ import java.util.Date;
 public class UserMessage implements Serializable {
     private Integer id;
 
-    private String taskid;
+    private String taskId;
 
-    private String fromUserid;
+    private String fromUserId;
 
-    private String toUserid;
+    private String toUserId;
 
     private String message;
 
     private Date createTime;
 
-    private Integer isread;
+    private Byte isRead;
 
     public Integer getId() {
         return id;
@@ -26,28 +26,28 @@ public class UserMessage implements Serializable {
         this.id = id;
     }
 
-    public String getTaskid() {
-        return taskid;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setTaskid(String taskid) {
-        this.taskid = taskid == null ? null : taskid.trim();
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
     }
 
-    public String getFromUserid() {
-        return fromUserid;
+    public String getFromUserId() {
+        return fromUserId;
     }
 
-    public void setFromUserid(String fromUserid) {
-        this.fromUserid = fromUserid == null ? null : fromUserid.trim();
+    public void setFromUserId(String fromUserId) {
+        this.fromUserId = fromUserId == null ? null : fromUserId.trim();
     }
 
-    public String getToUserid() {
-        return toUserid;
+    public String getToUserId() {
+        return toUserId;
     }
 
-    public void setToUserid(String toUserid) {
-        this.toUserid = toUserid == null ? null : toUserid.trim();
+    public void setToUserId(String toUserId) {
+        this.toUserId = toUserId == null ? null : toUserId.trim();
     }
 
     public String getMessage() {
@@ -66,12 +66,12 @@ public class UserMessage implements Serializable {
         this.createTime = createTime;
     }
 
-    public Integer getIsread() {
-        return isread;
+    public Byte getIsRead() {
+        return isRead;
     }
 
-    public void setIsread(Integer isread) {
-        this.isread = isread;
+    public void setIsRead(Byte isRead) {
+        this.isRead = isRead;
     }
 
     @Override
@@ -81,12 +81,12 @@ public class UserMessage implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", taskid=").append(taskid);
-        sb.append(", fromUserid=").append(fromUserid);
-        sb.append(", toUserid=").append(toUserid);
+        sb.append(", taskId=").append(taskId);
+        sb.append(", fromUserId=").append(fromUserId);
+        sb.append(", toUserId=").append(toUserId);
         sb.append(", message=").append(message);
         sb.append(", createTime=").append(createTime);
-        sb.append(", isread=").append(isread);
+        sb.append(", isRead=").append(isRead);
         sb.append("]");
         return sb.toString();
     }

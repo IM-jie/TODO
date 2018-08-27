@@ -25,25 +25,6 @@ import java.util.List;
 public class WebConfiguration extends WebMvcConfigurationSupport {
 
     /**
-     * fastjson
-     * @return
-     */
-    @Bean
-    public HttpMessageConverters fastJsonConfigure(){
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-        // 中文乱码解决方案
-        List<MediaType> mediaTypes = new ArrayList<>();
-        mediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        converter.setSupportedMediaTypes(mediaTypes);
-        //日期格式化
-        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
-        converter.setFastJsonConfig(fastJsonConfig);
-        return new HttpMessageConverters(converter);
-    }
-
-    /**
      * 增加拦截器
      */
     @Override

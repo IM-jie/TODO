@@ -3,15 +3,15 @@
 <mapper namespace="com.demo.dao.UserMessageMapper" >
   <resultMap id="BaseResultMap" type="com.demo.entity.UserMessage" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="taskid" property="taskid" jdbcType="VARCHAR" />
-    <result column="from_userid" property="fromUserid" jdbcType="VARCHAR" />
-    <result column="to_userid" property="toUserid" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="from_user_id" property="fromUserId" jdbcType="VARCHAR" />
+    <result column="to_user_id" property="toUserId" jdbcType="VARCHAR" />
     <result column="message" property="message" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="isread" property="isread" jdbcType="TINYINT" />
+    <result column="is_read" property="isRead" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, taskid, from_userid, to_userid, message, create_time, isread
+    id, task_id, from_user_id, to_user_id, message, create_time, is_read
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -27,11 +27,11 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_user_message (taskid, from_userid, to_userid, 
-      message, create_time, isread
+    insert into t_user_message (task_id, from_user_id, to_user_id, 
+      message, create_time, is_read
       )
-    values (#{taskid,jdbcType=VARCHAR}, #{fromUserid,jdbcType=VARCHAR}, #{toUserid,jdbcType=VARCHAR}, 
-      #{message,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{isread,jdbcType=TINYINT}
+    values (#{taskId,jdbcType=VARCHAR}, #{fromUserId,jdbcType=VARCHAR}, #{toUserId,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{isRead,jdbcType=TINYINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.demo.entity.UserMessage" >
@@ -40,14 +40,14 @@
     </selectKey>
     insert into t_user_message
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="taskid != null" >
-        taskid,
+      <if test="taskId != null" >
+        task_id,
       </if>
-      <if test="fromUserid != null" >
-        from_userid,
+      <if test="fromUserId != null" >
+        from_user_id,
       </if>
-      <if test="toUserid != null" >
-        to_userid,
+      <if test="toUserId != null" >
+        to_user_id,
       </if>
       <if test="message != null" >
         message,
@@ -55,19 +55,19 @@
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="isread != null" >
-        isread,
+      <if test="isRead != null" >
+        is_read,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="taskid != null" >
-        #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="fromUserid != null" >
-        #{fromUserid,jdbcType=VARCHAR},
+      <if test="fromUserId != null" >
+        #{fromUserId,jdbcType=VARCHAR},
       </if>
-      <if test="toUserid != null" >
-        #{toUserid,jdbcType=VARCHAR},
+      <if test="toUserId != null" >
+        #{toUserId,jdbcType=VARCHAR},
       </if>
       <if test="message != null" >
         #{message,jdbcType=VARCHAR},
@@ -75,22 +75,22 @@
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isread != null" >
-        #{isread,jdbcType=TINYINT},
+      <if test="isRead != null" >
+        #{isRead,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.UserMessage" >
     update t_user_message
     <set >
-      <if test="taskid != null" >
-        taskid = #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="fromUserid != null" >
-        from_userid = #{fromUserid,jdbcType=VARCHAR},
+      <if test="fromUserId != null" >
+        from_user_id = #{fromUserId,jdbcType=VARCHAR},
       </if>
-      <if test="toUserid != null" >
-        to_userid = #{toUserid,jdbcType=VARCHAR},
+      <if test="toUserId != null" >
+        to_user_id = #{toUserId,jdbcType=VARCHAR},
       </if>
       <if test="message != null" >
         message = #{message,jdbcType=VARCHAR},
@@ -98,20 +98,20 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isread != null" >
-        isread = #{isread,jdbcType=TINYINT},
+      <if test="isRead != null" >
+        is_read = #{isRead,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.demo.entity.UserMessage" >
     update t_user_message
-    set taskid = #{taskid,jdbcType=VARCHAR},
-      from_userid = #{fromUserid,jdbcType=VARCHAR},
-      to_userid = #{toUserid,jdbcType=VARCHAR},
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      from_user_id = #{fromUserId,jdbcType=VARCHAR},
+      to_user_id = #{toUserId,jdbcType=VARCHAR},
       message = #{message,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      isread = #{isread,jdbcType=TINYINT}
+      is_read = #{isRead,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

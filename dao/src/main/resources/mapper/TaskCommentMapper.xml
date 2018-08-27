@@ -3,15 +3,15 @@
 <mapper namespace="com.demo.dao.TaskCommentMapper" >
   <resultMap id="BaseResultMap" type="com.demo.entity.TaskComment" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="commentid" property="commentid" jdbcType="VARCHAR" />
-    <result column="taskid" property="taskid" jdbcType="VARCHAR" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="commentator" property="commentator" jdbcType="VARCHAR" />
     <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, commentid, taskid, comment, commentator, comment_time, status
+    id, comment_id, task_id, comment, commentator, comment_time, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -27,10 +27,10 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_task_comment (commentid, taskid, comment, 
+    insert into t_task_comment (comment_id, task_id, comment, 
       commentator, comment_time, status
       )
-    values (#{commentid,jdbcType=VARCHAR}, #{taskid,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+    values (#{commentId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
       #{commentator,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}
       )
   </insert>
@@ -40,11 +40,11 @@
     </selectKey>
     insert into t_task_comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="commentid != null" >
-        commentid,
+      <if test="commentId != null" >
+        comment_id,
       </if>
-      <if test="taskid != null" >
-        taskid,
+      <if test="taskId != null" >
+        task_id,
       </if>
       <if test="comment != null" >
         comment,
@@ -60,11 +60,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="commentid != null" >
-        #{commentid,jdbcType=VARCHAR},
+      <if test="commentId != null" >
+        #{commentId,jdbcType=VARCHAR},
       </if>
-      <if test="taskid != null" >
-        #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="comment != null" >
         #{comment,jdbcType=VARCHAR},
@@ -83,11 +83,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskComment" >
     update t_task_comment
     <set >
-      <if test="commentid != null" >
-        commentid = #{commentid,jdbcType=VARCHAR},
+      <if test="commentId != null" >
+        comment_id = #{commentId,jdbcType=VARCHAR},
       </if>
-      <if test="taskid != null" >
-        taskid = #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=VARCHAR},
@@ -106,8 +106,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskComment" >
     update t_task_comment
-    set commentid = #{commentid,jdbcType=VARCHAR},
-      taskid = #{taskid,jdbcType=VARCHAR},
+    set comment_id = #{commentId,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
       commentator = #{commentator,jdbcType=VARCHAR},
       comment_time = #{commentTime,jdbcType=TIMESTAMP},

@@ -6,7 +6,7 @@ import java.util.Date;
 public class AdminUser implements Serializable {
     private Integer id;
 
-    private String userid;
+    private String userId;
 
     private String username;
 
@@ -18,9 +18,9 @@ public class AdminUser implements Serializable {
 
     private String phoneCopy;
 
-    private String empno;
+    private String empNo;
 
-    private String blogname;
+    private String blogName;
 
     private String remark;
 
@@ -28,11 +28,11 @@ public class AdminUser implements Serializable {
 
     private String salt;
 
-    private Integer permissionid;
+    private Byte permissionId;
 
     private String groupType;
 
-    private String creater;
+    private String creator;
 
     private Date createTime;
 
@@ -44,12 +44,12 @@ public class AdminUser implements Serializable {
         this.id = id;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getUsername() {
@@ -92,20 +92,20 @@ public class AdminUser implements Serializable {
         this.phoneCopy = phoneCopy == null ? null : phoneCopy.trim();
     }
 
-    public String getEmpno() {
-        return empno;
+    public String getEmpNo() {
+        return empNo;
     }
 
-    public void setEmpno(String empno) {
-        this.empno = empno == null ? null : empno.trim();
+    public void setEmpNo(String empNo) {
+        this.empNo = empNo == null ? null : empNo.trim();
     }
 
-    public String getBlogname() {
-        return blogname;
+    public String getBlogName() {
+        return blogName;
     }
 
-    public void setBlogname(String blogname) {
-        this.blogname = blogname == null ? null : blogname.trim();
+    public void setBlogName(String blogName) {
+        this.blogName = blogName == null ? null : blogName.trim();
     }
 
     public String getRemark() {
@@ -132,12 +132,12 @@ public class AdminUser implements Serializable {
         this.salt = salt == null ? null : salt.trim();
     }
 
-    public Integer getPermissionid() {
-        return permissionid;
+    public Byte getPermissionId() {
+        return permissionId;
     }
 
-    public void setPermissionid(Integer permissionid) {
-        this.permissionid = permissionid;
+    public void setPermissionId(Byte permissionId) {
+        this.permissionId = permissionId;
     }
 
     public String getGroupType() {
@@ -148,12 +148,12 @@ public class AdminUser implements Serializable {
         this.groupType = groupType == null ? null : groupType.trim();
     }
 
-    public String getCreater() {
-        return creater;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setCreater(String creater) {
-        this.creater = creater == null ? null : creater.trim();
+    public void setCreator(String creator) {
+        this.creator = creator == null ? null : creator.trim();
     }
 
     public Date getCreateTime() {
@@ -171,20 +171,20 @@ public class AdminUser implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", userid=").append(userid);
+        sb.append(", userId=").append(userId);
         sb.append(", username=").append(username);
         sb.append(", pinyin=").append(pinyin);
         sb.append(", mail=").append(mail);
         sb.append(", phone=").append(phone);
         sb.append(", phoneCopy=").append(phoneCopy);
-        sb.append(", empno=").append(empno);
-        sb.append(", blogname=").append(blogname);
+        sb.append(", empNo=").append(empNo);
+        sb.append(", blogName=").append(blogName);
         sb.append(", remark=").append(remark);
         sb.append(", password=").append(password);
         sb.append(", salt=").append(salt);
-        sb.append(", permissionid=").append(permissionid);
+        sb.append(", permissionId=").append(permissionId);
         sb.append(", groupType=").append(groupType);
-        sb.append(", creater=").append(creater);
+        sb.append(", creator=").append(creator);
         sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();

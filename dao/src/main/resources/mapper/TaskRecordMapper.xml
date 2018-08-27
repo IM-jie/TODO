@@ -3,8 +3,8 @@
 <mapper namespace="com.demo.dao.TaskRecordMapper" >
   <resultMap id="BaseResultMap" type="com.demo.entity.TaskRecord" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="recordid" property="recordid" jdbcType="VARCHAR" />
-    <result column="taskid" property="taskid" jdbcType="VARCHAR" />
+    <result column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
     <result column="operate_type" property="operateType" jdbcType="TINYINT" />
     <result column="operate" property="operate" jdbcType="VARCHAR" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
@@ -12,7 +12,7 @@
     <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, recordid, taskid, operate_type, operate, operator, operate_time, status
+    id, record_id, task_id, operate_type, operate, operator, operate_time, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,10 +28,10 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_task_record (recordid, taskid, operate_type, 
+    insert into t_task_record (record_id, task_id, operate_type, 
       operate, operator, operate_time, 
       status)
-    values (#{recordid,jdbcType=VARCHAR}, #{taskid,jdbcType=VARCHAR}, #{operateType,jdbcType=TINYINT}, 
+    values (#{recordId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{operateType,jdbcType=TINYINT}, 
       #{operate,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=TINYINT})
   </insert>
@@ -41,11 +41,11 @@
     </selectKey>
     insert into t_task_record
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="recordid != null" >
-        recordid,
+      <if test="recordId != null" >
+        record_id,
       </if>
-      <if test="taskid != null" >
-        taskid,
+      <if test="taskId != null" >
+        task_id,
       </if>
       <if test="operateType != null" >
         operate_type,
@@ -64,11 +64,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="recordid != null" >
-        #{recordid,jdbcType=VARCHAR},
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
       </if>
-      <if test="taskid != null" >
-        #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="operateType != null" >
         #{operateType,jdbcType=TINYINT},
@@ -90,11 +90,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskRecord" >
     update t_task_record
     <set >
-      <if test="recordid != null" >
-        recordid = #{recordid,jdbcType=VARCHAR},
+      <if test="recordId != null" >
+        record_id = #{recordId,jdbcType=VARCHAR},
       </if>
-      <if test="taskid != null" >
-        taskid = #{taskid,jdbcType=VARCHAR},
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="operateType != null" >
         operate_type = #{operateType,jdbcType=TINYINT},
@@ -116,8 +116,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskRecord" >
     update t_task_record
-    set recordid = #{recordid,jdbcType=VARCHAR},
-      taskid = #{taskid,jdbcType=VARCHAR},
+    set record_id = #{recordId,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
       operate_type = #{operateType,jdbcType=TINYINT},
       operate = #{operate,jdbcType=VARCHAR},
       operator = #{operator,jdbcType=VARCHAR},

@@ -6,9 +6,9 @@ import java.util.Date;
 public class TaskRecord implements Serializable {
     private Integer id;
 
-    private String recordid;
+    private String recordId;
 
-    private String taskid;
+    private String taskId;
 
     private Integer operateType;
 
@@ -28,20 +28,20 @@ public class TaskRecord implements Serializable {
         this.id = id;
     }
 
-    public String getRecordid() {
-        return recordid;
+    public String getRecordId() {
+        return recordId;
     }
 
-    public void setRecordid(String recordid) {
-        this.recordid = recordid == null ? null : recordid.trim();
+    public void setRecordId(String recordId) {
+        this.recordId = recordId == null ? null : recordId.trim();
     }
 
-    public String getTaskid() {
-        return taskid;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setTaskid(String taskid) {
-        this.taskid = taskid == null ? null : taskid.trim();
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
     }
 
     public Integer getOperateType() {
@@ -91,8 +91,8 @@ public class TaskRecord implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", recordid=").append(recordid);
-        sb.append(", taskid=").append(taskid);
+        sb.append(", recordId=").append(recordId);
+        sb.append(", taskId=").append(taskId);
         sb.append(", operateType=").append(operateType);
         sb.append(", operate=").append(operate);
         sb.append(", operator=").append(operator);

@@ -4,26 +4,36 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class TaskUser implements Serializable {
-    private String taskid;
+    private Integer id;
 
-    private String userid;
+    private String taskId;
+
+    private String userId;
 
     private Date followTime;
 
-    public String getTaskid() {
-        return taskid;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTaskid(String taskid) {
-        this.taskid = taskid == null ? null : taskid.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public Date getFollowTime() {
@@ -40,8 +50,9 @@ public class TaskUser implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", taskid=").append(taskid);
-        sb.append(", userid=").append(userid);
+        sb.append(", id=").append(id);
+        sb.append(", taskId=").append(taskId);
+        sb.append(", userId=").append(userId);
         sb.append(", followTime=").append(followTime);
         sb.append("]");
         return sb.toString();

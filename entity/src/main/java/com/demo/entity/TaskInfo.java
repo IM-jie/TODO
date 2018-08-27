@@ -6,11 +6,11 @@ import java.util.Date;
 public class TaskInfo implements Serializable {
     private Integer id;
 
-    private String taskid;
+    private String taskId;
 
     private String content;
 
-    private String creater;
+    private String creator;
 
     private String finisher;
 
@@ -34,6 +34,12 @@ public class TaskInfo implements Serializable {
 
     private Integer commentCount;
 
+    private String creatorId;
+
+    private String finisherId;
+
+    private String workerId;
+
     public Integer getId() {
         return id;
     }
@@ -42,12 +48,12 @@ public class TaskInfo implements Serializable {
         this.id = id;
     }
 
-    public String getTaskid() {
-        return taskid;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setTaskid(String taskid) {
-        this.taskid = taskid == null ? null : taskid.trim();
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
     }
 
     public String getContent() {
@@ -58,12 +64,12 @@ public class TaskInfo implements Serializable {
         this.content = content == null ? null : content.trim();
     }
 
-    public String getCreater() {
-        return creater;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setCreater(String creater) {
-        this.creater = creater == null ? null : creater.trim();
+    public void setCreator(String creator) {
+        this.creator = creator == null ? null : creator.trim();
     }
 
     public String getFinisher() {
@@ -154,6 +160,30 @@ public class TaskInfo implements Serializable {
         this.commentCount = commentCount;
     }
 
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId == null ? null : creatorId.trim();
+    }
+
+    public String getFinisherId() {
+        return finisherId;
+    }
+
+    public void setFinisherId(String finisherId) {
+        this.finisherId = finisherId == null ? null : finisherId.trim();
+    }
+
+    public String getWorkerId() {
+        return workerId;
+    }
+
+    public void setWorkerId(String workerId) {
+        this.workerId = workerId == null ? null : workerId.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -161,9 +191,9 @@ public class TaskInfo implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", taskid=").append(taskid);
+        sb.append(", taskId=").append(taskId);
         sb.append(", content=").append(content);
-        sb.append(", creater=").append(creater);
+        sb.append(", creator=").append(creator);
         sb.append(", finisher=").append(finisher);
         sb.append(", worker=").append(worker);
         sb.append(", status=").append(status);
@@ -175,6 +205,9 @@ public class TaskInfo implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", finishTime=").append(finishTime);
         sb.append(", commentCount=").append(commentCount);
+        sb.append(", creatorId=").append(creatorId);
+        sb.append(", finisherId=").append(finisherId);
+        sb.append(", workerId=").append(workerId);
         sb.append("]");
         return sb.toString();
     }
