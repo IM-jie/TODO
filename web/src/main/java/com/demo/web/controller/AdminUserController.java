@@ -19,9 +19,9 @@ import java.util.List;
 @RestController
 @ResponseBody
 @RequestMapping("/todo")
-public class UserController {
+public class AdminUserController {
 
-    Logger logger = LoggerFactory.getLogger(UserController.class);
+    Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
     @Reference
     IAdminUserSV iAdminUserSV;
@@ -29,8 +29,8 @@ public class UserController {
     @GetMapping("/getUser")
     public Result getUser()
     {
-        List<AdminUser> adminUserList = iAdminUserSV.adminUserList();
-        return ResultUtil.success(adminUserList);
+        logger.info("获取单个用户信息----------");
+        return ResultUtil.success(iAdminUserSV.getAdminUser());
     }
 
 }

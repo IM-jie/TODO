@@ -17,4 +17,10 @@ public interface IAdminUserSV {
      * @return
      */
     List<AdminUser> adminUserList();
+
+    /**
+     * 获取用户信息
+     * @return
+     */
+    AdminUser getAdminUser();
 }

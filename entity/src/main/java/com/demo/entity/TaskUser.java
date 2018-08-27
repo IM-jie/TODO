@@ -1,8 +1,9 @@
 package com.demo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TaskUser {
+public class TaskUser implements Serializable {
     private String taskid;
 
     private String userid;

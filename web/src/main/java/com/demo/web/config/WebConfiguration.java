@@ -50,6 +50,6 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AppInterceptor())
                 //这里可以添加多个拦截器
-                .addPathPatterns("/todo/getUser");
+                .addPathPatterns("/mytodo/getUser");
     }
 }
