@@ -17,7 +17,7 @@ public class AdminUser {
 
     private String phoneCopy;
 
-    private String number;
+    private String empno;
 
     private String blogname;
 
@@ -29,7 +29,7 @@ public class AdminUser {
 
     private Integer permissionid;
 
-    private String group;
+    private String groupType;
 
     private String creater;
 
@@ -91,12 +91,12 @@ public class AdminUser {
         this.phoneCopy = phoneCopy == null ? null : phoneCopy.trim();
     }
 
-    public String getNumber() {
-        return number;
+    public String getEmpno() {
+        return empno;
     }
 
-    public void setNumber(String number) {
-        this.number = number == null ? null : number.trim();
+    public void setEmpno(String empno) {
+        this.empno = empno == null ? null : empno.trim();
     }
 
     public String getBlogname() {
@@ -139,12 +139,12 @@ public class AdminUser {
         this.permissionid = permissionid;
     }
 
-    public String getGroup() {
-        return group;
+    public String getGroupType() {
+        return groupType;
     }
 
-    public void setGroup(String group) {
-        this.group = group == null ? null : group.trim();
+    public void setGroupType(String groupType) {
+        this.groupType = groupType == null ? null : groupType.trim();
     }
 
     public String getCreater() {
@@ -176,13 +176,13 @@ public class AdminUser {
         sb.append(", mail=").append(mail);
         sb.append(", phone=").append(phone);
         sb.append(", phoneCopy=").append(phoneCopy);
-        sb.append(", number=").append(number);
+        sb.append(", empno=").append(empno);
         sb.append(", blogname=").append(blogname);
         sb.append(", remark=").append(remark);
         sb.append(", password=").append(password);
         sb.append(", salt=").append(salt);
         sb.append(", permissionid=").append(permissionid);
-        sb.append(", group=").append(group);
+        sb.append(", groupType=").append(groupType);
         sb.append(", creater=").append(creater);
         sb.append(", createTime=").append(createTime);
         sb.append("]");
