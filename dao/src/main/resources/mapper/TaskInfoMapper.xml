@@ -26,6 +26,29 @@
     priority, start_time, end_time, create_time, finish_time, comment_count, creator_id, 
     finisher_id, worker_id
   </sql>
+  <sql id="ByMap_Where_Clause">
+    <where>
+      <if test="eqId != null">
+        and id = #{eqId,jdbcType=INTEGER}
+      </if>
+      <if test="eqTaskId != null">
+        and task_id = #{eqTaskId,jdbcTyep=VARCHAR}
+      </if>
+      <if test="eqContent != null">
+        and content = #{eqContent,jdbcType=VARCHAR}
+      </if>
+      <if test="eqCreator != null">
+        and creator =#{eqCreator,jdbcType=VARCHAR}
+      </if>
+      <if test="eqFinisher != null">
+        and finisher = #{eqFinisher,jdbcType=VARCHAR}
+      </if>
+      <if test="eqWorker != null">
+        and worker = #{eqWorker,jdbcType=VARCHAR}
+      </if>
+      
+    </where>
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

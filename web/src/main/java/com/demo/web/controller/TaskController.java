@@ -1,11 +1,11 @@
 package com.demo.web.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.demo.entity.TaskInfo;
 import com.demo.entity.common.Result;
 import com.demo.service.iservice.ITaskInfoSV;
 import com.demo.utils.common.EmptyUtil;
 import com.demo.utils.common.GeneralException;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,6 +71,7 @@ public class TaskController {
     @GetMapping("/{taskid}")
     public Result getTaskInfo(@PathVariable(name = "taskid") String taskid) throws GeneralException {
         try{
+            LOGGER.info("taskid-->"+taskid);
             if (EmptyUtil.isEmpty(taskid)){
                 return new Result(1,"taskid为空");
             }
