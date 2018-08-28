@@ -18,5 +18,12 @@ public interface IAdminUserSV {
      */
     AdminUser getAdminUser();
 
-    AdminUser getAdminUser(String mail,String password);
+    /**
+     * 根据邮箱和密码获取用户信息
+     * @param mail
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    AdminUser login(String mail,String password) throws Exception;
 }
