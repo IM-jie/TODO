@@ -1,11 +1,12 @@
 package com.demo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author mac
  */
-public class UserMessage {
+public class UserMessage implements Serializable {
     private Integer id;
 
     private String taskId;

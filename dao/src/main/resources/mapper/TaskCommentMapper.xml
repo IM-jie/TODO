@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.demo.dao.TaskCommentMapper">
-  <resultMap id="BaseResultMap" type="com.demo.entity.TaskComment">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="comment_id" jdbcType="VARCHAR" property="commentId" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="comment" jdbcType="VARCHAR" property="comment" />
-    <result column="commentator" jdbcType="VARCHAR" property="commentator" />
-    <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.TaskCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.entity.TaskComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="commentator" property="commentator" jdbcType="VARCHAR" />
+    <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, comment_id, task_id, comment, commentator, comment_time, status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_task_comment
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_task_comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.demo.entity.TaskComment">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insert" parameterType="com.demo.entity.TaskComment" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_task_comment (comment_id, task_id, comment, 
@@ -34,303 +34,77 @@
       #{commentator,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.demo.entity.TaskComment">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insertSelective" parameterType="com.demo.entity.TaskComment" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_task_comment
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="commentId != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
         comment_id,
       </if>
-      <if test="taskId != null">
+      <if test="taskId != null" >
         task_id,
       </if>
-      <if test="comment != null">
+      <if test="comment != null" >
         comment,
       </if>
-      <if test="commentator != null">
+      <if test="commentator != null" >
         commentator,
       </if>
-      <if test="commentTime != null">
+      <if test="commentTime != null" >
         comment_time,
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="commentId != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
         #{commentId,jdbcType=VARCHAR},
       </if>
-      <if test="taskId != null">
+      <if test="taskId != null" >
         #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="comment != null">
+      <if test="comment != null" >
         #{comment,jdbcType=VARCHAR},
       </if>
-      <if test="commentator != null">
+      <if test="commentator != null" >
         #{commentator,jdbcType=VARCHAR},
       </if>
-      <if test="commentTime != null">
+      <if test="commentTime != null" >
         #{commentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskComment">
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskComment" >
     update t_task_comment
-    <set>
-      <if test="commentId != null">
+    <set >
+      <if test="commentId != null" >
         comment_id = #{commentId,jdbcType=VARCHAR},
       </if>
-      <if test="taskId != null">
+      <if test="taskId != null" >
         task_id = #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="comment != null">
+      <if test="comment != null" >
         comment = #{comment,jdbcType=VARCHAR},
       </if>
-      <if test="commentator != null">
+      <if test="commentator != null" >
         commentator = #{commentator,jdbcType=VARCHAR},
       </if>
-      <if test="commentTime != null">
+      <if test="commentTime != null" >
         comment_time = #{commentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskComment">
-    update t_task_comment
-    set comment_id = #{commentId,jdbcType=VARCHAR},
-      task_id = #{taskId,jdbcType=VARCHAR},
-      comment = #{comment,jdbcType=VARCHAR},
-      commentator = #{commentator,jdbcType=VARCHAR},
-      comment_time = #{commentTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=TINYINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.demo.entity.TaskComment">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="comment_id" jdbcType="VARCHAR" property="commentId" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="comment" jdbcType="VARCHAR" property="comment" />
-    <result column="commentator" jdbcType="VARCHAR" property="commentator" />
-    <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, comment_id, task_id, comment, commentator, comment_time, status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_task_comment
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_task_comment
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.demo.entity.TaskComment">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_comment (comment_id, task_id, comment, 
-      commentator, comment_time, status
-      )
-    values (#{commentId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
-      #{commentator,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.demo.entity.TaskComment">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_comment
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="commentId != null">
-        comment_id,
-      </if>
-      <if test="taskId != null">
-        task_id,
-      </if>
-      <if test="comment != null">
-        comment,
-      </if>
-      <if test="commentator != null">
-        commentator,
-      </if>
-      <if test="commentTime != null">
-        comment_time,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="commentId != null">
-        #{commentId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="comment != null">
-        #{comment,jdbcType=VARCHAR},
-      </if>
-      <if test="commentator != null">
-        #{commentator,jdbcType=VARCHAR},
-      </if>
-      <if test="commentTime != null">
-        #{commentTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskComment">
-    update t_task_comment
-    <set>
-      <if test="commentId != null">
-        comment_id = #{commentId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        task_id = #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="comment != null">
-        comment = #{comment,jdbcType=VARCHAR},
-      </if>
-      <if test="commentator != null">
-        commentator = #{commentator,jdbcType=VARCHAR},
-      </if>
-      <if test="commentTime != null">
-        comment_time = #{commentTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskComment">
-    update t_task_comment
-    set comment_id = #{commentId,jdbcType=VARCHAR},
-      task_id = #{taskId,jdbcType=VARCHAR},
-      comment = #{comment,jdbcType=VARCHAR},
-      commentator = #{commentator,jdbcType=VARCHAR},
-      comment_time = #{commentTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=TINYINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.demo.entity.TaskComment">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="comment_id" jdbcType="VARCHAR" property="commentId" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="comment" jdbcType="VARCHAR" property="comment" />
-    <result column="commentator" jdbcType="VARCHAR" property="commentator" />
-    <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, comment_id, task_id, comment, commentator, comment_time, status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_task_comment
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_task_comment
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.demo.entity.TaskComment">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_comment (comment_id, task_id, comment, 
-      commentator, comment_time, status
-      )
-    values (#{commentId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
-      #{commentator,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.demo.entity.TaskComment">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_comment
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="commentId != null">
-        comment_id,
-      </if>
-      <if test="taskId != null">
-        task_id,
-      </if>
-      <if test="comment != null">
-        comment,
-      </if>
-      <if test="commentator != null">
-        commentator,
-      </if>
-      <if test="commentTime != null">
-        comment_time,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="commentId != null">
-        #{commentId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="comment != null">
-        #{comment,jdbcType=VARCHAR},
-      </if>
-      <if test="commentator != null">
-        #{commentator,jdbcType=VARCHAR},
-      </if>
-      <if test="commentTime != null">
-        #{commentTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskComment">
-    update t_task_comment
-    <set>
-      <if test="commentId != null">
-        comment_id = #{commentId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        task_id = #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="comment != null">
-        comment = #{comment,jdbcType=VARCHAR},
-      </if>
-      <if test="commentator != null">
-        commentator = #{commentator,jdbcType=VARCHAR},
-      </if>
-      <if test="commentTime != null">
-        comment_time = #{commentTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskComment">
+  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskComment" >
     update t_task_comment
     set comment_id = #{commentId,jdbcType=VARCHAR},
       task_id = #{taskId,jdbcType=VARCHAR},

@@ -2,6 +2,9 @@ package com.demo.dao;
 
 import com.demo.entity.TaskComment;
 
+/**
+ * @author mac
+ */
 public interface TaskCommentMapper {
     int deleteByPrimaryKey(Integer id);
 

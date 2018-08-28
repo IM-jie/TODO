@@ -2,6 +2,9 @@ package com.demo.dao;
 
 import com.demo.entity.TaskUser;
 
+/**
+ * @author mac
+ */
 public interface TaskUserMapper {
     int deleteByPrimaryKey(Integer id);
 

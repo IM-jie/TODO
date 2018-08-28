@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.demo.dao.TaskRecordMapper">
-  <resultMap id="BaseResultMap" type="com.demo.entity.TaskRecord">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="record_id" jdbcType="VARCHAR" property="recordId" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="operate_type" jdbcType="TINYINT" property="operateType" />
-    <result column="operate" jdbcType="VARCHAR" property="operate" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.TaskRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.entity.TaskRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="operate_type" property="operateType" jdbcType="TINYINT" />
+    <result column="operate" property="operate" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, record_id, task_id, operate_type, operate, operator, operate_time, status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_task_record
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_task_record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.demo.entity.TaskRecord">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insert" parameterType="com.demo.entity.TaskRecord" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_task_record (record_id, task_id, operate_type, 
@@ -35,334 +35,86 @@
       #{operate,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.demo.entity.TaskRecord">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insertSelective" parameterType="com.demo.entity.TaskRecord" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_task_record
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="recordId != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
         record_id,
       </if>
-      <if test="taskId != null">
+      <if test="taskId != null" >
         task_id,
       </if>
-      <if test="operateType != null">
+      <if test="operateType != null" >
         operate_type,
       </if>
-      <if test="operate != null">
+      <if test="operate != null" >
         operate,
       </if>
-      <if test="operator != null">
+      <if test="operator != null" >
         operator,
       </if>
-      <if test="operateTime != null">
+      <if test="operateTime != null" >
         operate_time,
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="recordId != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
         #{recordId,jdbcType=VARCHAR},
       </if>
-      <if test="taskId != null">
+      <if test="taskId != null" >
         #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="operateType != null">
+      <if test="operateType != null" >
         #{operateType,jdbcType=TINYINT},
       </if>
-      <if test="operate != null">
+      <if test="operate != null" >
         #{operate,jdbcType=VARCHAR},
       </if>
-      <if test="operator != null">
+      <if test="operator != null" >
         #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operateTime != null">
+      <if test="operateTime != null" >
         #{operateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskRecord">
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskRecord" >
     update t_task_record
-    <set>
-      <if test="recordId != null">
+    <set >
+      <if test="recordId != null" >
         record_id = #{recordId,jdbcType=VARCHAR},
       </if>
-      <if test="taskId != null">
+      <if test="taskId != null" >
         task_id = #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="operateType != null">
+      <if test="operateType != null" >
         operate_type = #{operateType,jdbcType=TINYINT},
       </if>
-      <if test="operate != null">
+      <if test="operate != null" >
         operate = #{operate,jdbcType=VARCHAR},
       </if>
-      <if test="operator != null">
+      <if test="operator != null" >
         operator = #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operateTime != null">
+      <if test="operateTime != null" >
         operate_time = #{operateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskRecord">
-    update t_task_record
-    set record_id = #{recordId,jdbcType=VARCHAR},
-      task_id = #{taskId,jdbcType=VARCHAR},
-      operate_type = #{operateType,jdbcType=TINYINT},
-      operate = #{operate,jdbcType=VARCHAR},
-      operator = #{operator,jdbcType=VARCHAR},
-      operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=TINYINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.demo.entity.TaskRecord">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="record_id" jdbcType="VARCHAR" property="recordId" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="operate_type" jdbcType="TINYINT" property="operateType" />
-    <result column="operate" jdbcType="VARCHAR" property="operate" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, record_id, task_id, operate_type, operate, operator, operate_time, status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_task_record
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_task_record
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.demo.entity.TaskRecord">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_record (record_id, task_id, operate_type, 
-      operate, operator, operate_time, 
-      status)
-    values (#{recordId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{operateType,jdbcType=TINYINT}, 
-      #{operate,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=TINYINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.demo.entity.TaskRecord">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_record
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="recordId != null">
-        record_id,
-      </if>
-      <if test="taskId != null">
-        task_id,
-      </if>
-      <if test="operateType != null">
-        operate_type,
-      </if>
-      <if test="operate != null">
-        operate,
-      </if>
-      <if test="operator != null">
-        operator,
-      </if>
-      <if test="operateTime != null">
-        operate_time,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="recordId != null">
-        #{recordId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="operateType != null">
-        #{operateType,jdbcType=TINYINT},
-      </if>
-      <if test="operate != null">
-        #{operate,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null">
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskRecord">
-    update t_task_record
-    <set>
-      <if test="recordId != null">
-        record_id = #{recordId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        task_id = #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="operateType != null">
-        operate_type = #{operateType,jdbcType=TINYINT},
-      </if>
-      <if test="operate != null">
-        operate = #{operate,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null">
-        operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskRecord">
-    update t_task_record
-    set record_id = #{recordId,jdbcType=VARCHAR},
-      task_id = #{taskId,jdbcType=VARCHAR},
-      operate_type = #{operateType,jdbcType=TINYINT},
-      operate = #{operate,jdbcType=VARCHAR},
-      operator = #{operator,jdbcType=VARCHAR},
-      operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=TINYINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.demo.entity.TaskRecord">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="record_id" jdbcType="VARCHAR" property="recordId" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="operate_type" jdbcType="TINYINT" property="operateType" />
-    <result column="operate" jdbcType="VARCHAR" property="operate" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, record_id, task_id, operate_type, operate, operator, operate_time, status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_task_record
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_task_record
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.demo.entity.TaskRecord">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_record (record_id, task_id, operate_type, 
-      operate, operator, operate_time, 
-      status)
-    values (#{recordId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{operateType,jdbcType=TINYINT}, 
-      #{operate,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=TINYINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.demo.entity.TaskRecord">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_task_record
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="recordId != null">
-        record_id,
-      </if>
-      <if test="taskId != null">
-        task_id,
-      </if>
-      <if test="operateType != null">
-        operate_type,
-      </if>
-      <if test="operate != null">
-        operate,
-      </if>
-      <if test="operator != null">
-        operator,
-      </if>
-      <if test="operateTime != null">
-        operate_time,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="recordId != null">
-        #{recordId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="operateType != null">
-        #{operateType,jdbcType=TINYINT},
-      </if>
-      <if test="operate != null">
-        #{operate,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null">
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskRecord">
-    update t_task_record
-    <set>
-      <if test="recordId != null">
-        record_id = #{recordId,jdbcType=VARCHAR},
-      </if>
-      <if test="taskId != null">
-        task_id = #{taskId,jdbcType=VARCHAR},
-      </if>
-      <if test="operateType != null">
-        operate_type = #{operateType,jdbcType=TINYINT},
-      </if>
-      <if test="operate != null">
-        operate = #{operate,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null">
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null">
-        operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskRecord">
+  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskRecord" >
     update t_task_record
     set record_id = #{recordId,jdbcType=VARCHAR},
       task_id = #{taskId,jdbcType=VARCHAR},

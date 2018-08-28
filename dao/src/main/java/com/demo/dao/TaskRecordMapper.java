@@ -2,6 +2,9 @@ package com.demo.dao;
 
 import com.demo.entity.TaskRecord;
 
+/**
+ * @author mac
+ */
 public interface TaskRecordMapper {
     int deleteByPrimaryKey(Integer id);
 

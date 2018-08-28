@@ -2,6 +2,9 @@ package com.demo.dao;
 
 import com.demo.entity.AdminUser;
 
+/**
+ * @author mac
+ */
 public interface AdminUserMapper {
     int deleteByPrimaryKey(Integer id);
 

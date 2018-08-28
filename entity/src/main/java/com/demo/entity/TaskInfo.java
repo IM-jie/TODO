@@ -1,11 +1,12 @@
 package com.demo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author mac
  */
-public class TaskInfo {
+public class TaskInfo implements Serializable {
     private Integer id;
 
     private String taskId;

@@ -2,6 +2,9 @@ package com.demo.dao;
 
 import com.demo.entity.TaskInfo;
 
+/**
+ * @author mac
+ */
 public interface TaskInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
