@@ -1,43 +1,43 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.demo.dao.TaskInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.demo.entity.TaskInfo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="creator" property="creator" jdbcType="VARCHAR" />
-    <result column="finisher" property="finisher" jdbcType="VARCHAR" />
-    <result column="worker" property="worker" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="private_status" property="privateStatus" jdbcType="TINYINT" />
-    <result column="mark_status" property="markStatus" jdbcType="TINYINT" />
-    <result column="priority" property="priority" jdbcType="TINYINT" />
-    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
-    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
-    <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
-    <result column="finisher_id" property="finisherId" jdbcType="VARCHAR" />
-    <result column="worker_id" property="workerId" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.TaskInfoMapper">
+  <resultMap id="BaseResultMap" type="com.demo.entity.TaskInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="finisher" jdbcType="VARCHAR" property="finisher" />
+    <result column="worker" jdbcType="VARCHAR" property="worker" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="private_status" jdbcType="TINYINT" property="privateStatus" />
+    <result column="mark_status" jdbcType="TINYINT" property="markStatus" />
+    <result column="priority" jdbcType="TINYINT" property="priority" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="finisher_id" jdbcType="VARCHAR" property="finisherId" />
+    <result column="worker_id" jdbcType="VARCHAR" property="workerId" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     id, task_id, content, creator, finisher, worker, status, private_status, mark_status, 
     priority, start_time, end_time, create_time, finish_time, comment_count, creator_id, 
     finisher_id, worker_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_task_info
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_task_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.demo.entity.TaskInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+  <insert id="insert" parameterType="com.demo.entity.TaskInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_task_info (task_id, content, creator, 
@@ -53,176 +53,660 @@
       #{finishTime,jdbcType=TIMESTAMP}, #{commentCount,jdbcType=INTEGER}, #{creatorId,jdbcType=VARCHAR}, 
       #{finisherId,jdbcType=VARCHAR}, #{workerId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.demo.entity.TaskInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+  <insert id="insertSelective" parameterType="com.demo.entity.TaskInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_task_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="taskId != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
         task_id,
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         content,
       </if>
-      <if test="creator != null" >
+      <if test="creator != null">
         creator,
       </if>
-      <if test="finisher != null" >
+      <if test="finisher != null">
         finisher,
       </if>
-      <if test="worker != null" >
+      <if test="worker != null">
         worker,
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         status,
       </if>
-      <if test="privateStatus != null" >
+      <if test="privateStatus != null">
         private_status,
       </if>
-      <if test="markStatus != null" >
+      <if test="markStatus != null">
         mark_status,
       </if>
-      <if test="priority != null" >
+      <if test="priority != null">
         priority,
       </if>
-      <if test="startTime != null" >
+      <if test="startTime != null">
         start_time,
       </if>
-      <if test="endTime != null" >
+      <if test="endTime != null">
         end_time,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="finishTime != null" >
+      <if test="finishTime != null">
         finish_time,
       </if>
-      <if test="commentCount != null" >
+      <if test="commentCount != null">
         comment_count,
       </if>
-      <if test="creatorId != null" >
+      <if test="creatorId != null">
         creator_id,
       </if>
-      <if test="finisherId != null" >
+      <if test="finisherId != null">
         finisher_id,
       </if>
-      <if test="workerId != null" >
+      <if test="workerId != null">
         worker_id,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="taskId != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
         #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null" >
+      <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
       </if>
-      <if test="finisher != null" >
+      <if test="finisher != null">
         #{finisher,jdbcType=VARCHAR},
       </if>
-      <if test="worker != null" >
+      <if test="worker != null">
         #{worker,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
-      <if test="privateStatus != null" >
+      <if test="privateStatus != null">
         #{privateStatus,jdbcType=TINYINT},
       </if>
-      <if test="markStatus != null" >
+      <if test="markStatus != null">
         #{markStatus,jdbcType=TINYINT},
       </if>
-      <if test="priority != null" >
+      <if test="priority != null">
         #{priority,jdbcType=TINYINT},
       </if>
-      <if test="startTime != null" >
+      <if test="startTime != null">
         #{startTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="endTime != null" >
+      <if test="endTime != null">
         #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="finishTime != null" >
+      <if test="finishTime != null">
         #{finishTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="commentCount != null" >
+      <if test="commentCount != null">
         #{commentCount,jdbcType=INTEGER},
       </if>
-      <if test="creatorId != null" >
+      <if test="creatorId != null">
         #{creatorId,jdbcType=VARCHAR},
       </if>
-      <if test="finisherId != null" >
+      <if test="finisherId != null">
         #{finisherId,jdbcType=VARCHAR},
       </if>
-      <if test="workerId != null" >
+      <if test="workerId != null">
         #{workerId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskInfo">
     update t_task_info
-    <set >
-      <if test="taskId != null" >
+    <set>
+      <if test="taskId != null">
         task_id = #{taskId,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="creator != null" >
+      <if test="creator != null">
         creator = #{creator,jdbcType=VARCHAR},
       </if>
-      <if test="finisher != null" >
+      <if test="finisher != null">
         finisher = #{finisher,jdbcType=VARCHAR},
       </if>
-      <if test="worker != null" >
+      <if test="worker != null">
         worker = #{worker,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
-      <if test="privateStatus != null" >
+      <if test="privateStatus != null">
         private_status = #{privateStatus,jdbcType=TINYINT},
       </if>
-      <if test="markStatus != null" >
+      <if test="markStatus != null">
         mark_status = #{markStatus,jdbcType=TINYINT},
       </if>
-      <if test="priority != null" >
+      <if test="priority != null">
         priority = #{priority,jdbcType=TINYINT},
       </if>
-      <if test="startTime != null" >
+      <if test="startTime != null">
         start_time = #{startTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="endTime != null" >
+      <if test="endTime != null">
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="finishTime != null" >
+      <if test="finishTime != null">
         finish_time = #{finishTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="commentCount != null" >
+      <if test="commentCount != null">
         comment_count = #{commentCount,jdbcType=INTEGER},
       </if>
-      <if test="creatorId != null" >
+      <if test="creatorId != null">
         creator_id = #{creatorId,jdbcType=VARCHAR},
       </if>
-      <if test="finisherId != null" >
+      <if test="finisherId != null">
         finisher_id = #{finisherId,jdbcType=VARCHAR},
       </if>
-      <if test="workerId != null" >
+      <if test="workerId != null">
         worker_id = #{workerId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskInfo">
+    update t_task_info
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      finisher = #{finisher,jdbcType=VARCHAR},
+      worker = #{worker,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      private_status = #{privateStatus,jdbcType=TINYINT},
+      mark_status = #{markStatus,jdbcType=TINYINT},
+      priority = #{priority,jdbcType=TINYINT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      finisher_id = #{finisherId,jdbcType=VARCHAR},
+      worker_id = #{workerId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.demo.entity.TaskInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="finisher" jdbcType="VARCHAR" property="finisher" />
+    <result column="worker" jdbcType="VARCHAR" property="worker" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="private_status" jdbcType="TINYINT" property="privateStatus" />
+    <result column="mark_status" jdbcType="TINYINT" property="markStatus" />
+    <result column="priority" jdbcType="TINYINT" property="priority" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="finisher_id" jdbcType="VARCHAR" property="finisherId" />
+    <result column="worker_id" jdbcType="VARCHAR" property="workerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, task_id, content, creator, finisher, worker, status, private_status, mark_status, 
+    priority, start_time, end_time, create_time, finish_time, comment_count, creator_id, 
+    finisher_id, worker_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_task_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_task_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.demo.entity.TaskInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_task_info (task_id, content, creator, 
+      finisher, worker, status, 
+      private_status, mark_status, priority, 
+      start_time, end_time, create_time, 
+      finish_time, comment_count, creator_id, 
+      finisher_id, worker_id)
+    values (#{taskId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{finisher,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{privateStatus,jdbcType=TINYINT}, #{markStatus,jdbcType=TINYINT}, #{priority,jdbcType=TINYINT}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{finishTime,jdbcType=TIMESTAMP}, #{commentCount,jdbcType=INTEGER}, #{creatorId,jdbcType=VARCHAR}, 
+      #{finisherId,jdbcType=VARCHAR}, #{workerId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.entity.TaskInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_task_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="finisher != null">
+        finisher,
+      </if>
+      <if test="worker != null">
+        worker,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="privateStatus != null">
+        private_status,
+      </if>
+      <if test="markStatus != null">
+        mark_status,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="finishTime != null">
+        finish_time,
+      </if>
+      <if test="commentCount != null">
+        comment_count,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="finisherId != null">
+        finisher_id,
+      </if>
+      <if test="workerId != null">
+        worker_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="finisher != null">
+        #{finisher,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null">
+        #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="privateStatus != null">
+        #{privateStatus,jdbcType=TINYINT},
+      </if>
+      <if test="markStatus != null">
+        #{markStatus,jdbcType=TINYINT},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null">
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="finisherId != null">
+        #{finisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workerId != null">
+        #{workerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskInfo">
+    update t_task_info
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="finisher != null">
+        finisher = #{finisher,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null">
+        worker = #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="privateStatus != null">
+        private_status = #{privateStatus,jdbcType=TINYINT},
+      </if>
+      <if test="markStatus != null">
+        mark_status = #{markStatus,jdbcType=TINYINT},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null">
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentCount != null">
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="finisherId != null">
+        finisher_id = #{finisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workerId != null">
+        worker_id = #{workerId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskInfo">
+    update t_task_info
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      finisher = #{finisher,jdbcType=VARCHAR},
+      worker = #{worker,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      private_status = #{privateStatus,jdbcType=TINYINT},
+      mark_status = #{markStatus,jdbcType=TINYINT},
+      priority = #{priority,jdbcType=TINYINT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      finisher_id = #{finisherId,jdbcType=VARCHAR},
+      worker_id = #{workerId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.demo.entity.TaskInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="finisher" jdbcType="VARCHAR" property="finisher" />
+    <result column="worker" jdbcType="VARCHAR" property="worker" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="private_status" jdbcType="TINYINT" property="privateStatus" />
+    <result column="mark_status" jdbcType="TINYINT" property="markStatus" />
+    <result column="priority" jdbcType="TINYINT" property="priority" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="finisher_id" jdbcType="VARCHAR" property="finisherId" />
+    <result column="worker_id" jdbcType="VARCHAR" property="workerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, task_id, content, creator, finisher, worker, status, private_status, mark_status, 
+    priority, start_time, end_time, create_time, finish_time, comment_count, creator_id, 
+    finisher_id, worker_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_task_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_task_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.demo.entity.TaskInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_task_info (task_id, content, creator, 
+      finisher, worker, status, 
+      private_status, mark_status, priority, 
+      start_time, end_time, create_time, 
+      finish_time, comment_count, creator_id, 
+      finisher_id, worker_id)
+    values (#{taskId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{finisher,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{privateStatus,jdbcType=TINYINT}, #{markStatus,jdbcType=TINYINT}, #{priority,jdbcType=TINYINT}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{finishTime,jdbcType=TIMESTAMP}, #{commentCount,jdbcType=INTEGER}, #{creatorId,jdbcType=VARCHAR}, 
+      #{finisherId,jdbcType=VARCHAR}, #{workerId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.entity.TaskInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_task_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="finisher != null">
+        finisher,
+      </if>
+      <if test="worker != null">
+        worker,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="privateStatus != null">
+        private_status,
+      </if>
+      <if test="markStatus != null">
+        mark_status,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="finishTime != null">
+        finish_time,
+      </if>
+      <if test="commentCount != null">
+        comment_count,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="finisherId != null">
+        finisher_id,
+      </if>
+      <if test="workerId != null">
+        worker_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="finisher != null">
+        #{finisher,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null">
+        #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="privateStatus != null">
+        #{privateStatus,jdbcType=TINYINT},
+      </if>
+      <if test="markStatus != null">
+        #{markStatus,jdbcType=TINYINT},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null">
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="finisherId != null">
+        #{finisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workerId != null">
+        #{workerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.entity.TaskInfo">
+    update t_task_info
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="finisher != null">
+        finisher = #{finisher,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null">
+        worker = #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="privateStatus != null">
+        private_status = #{privateStatus,jdbcType=TINYINT},
+      </if>
+      <if test="markStatus != null">
+        mark_status = #{markStatus,jdbcType=TINYINT},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null">
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentCount != null">
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="finisherId != null">
+        finisher_id = #{finisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workerId != null">
+        worker_id = #{workerId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.entity.TaskInfo">
     update t_task_info
     set task_id = #{taskId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},

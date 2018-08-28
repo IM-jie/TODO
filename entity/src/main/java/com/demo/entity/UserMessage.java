@@ -1,9 +1,8 @@
 package com.demo.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class UserMessage implements Serializable {
+public class UserMessage {
     private Integer id;
 
     private String taskId;
@@ -16,7 +15,7 @@ public class UserMessage implements Serializable {
 
     private Date createTime;
 
-    private Byte isRead;
+    private Integer isRead;
 
     public Integer getId() {
         return id;
@@ -66,11 +65,11 @@ public class UserMessage implements Serializable {
         this.createTime = createTime;
     }
 
-    public Byte getIsRead() {
+    public Integer getIsRead() {
         return isRead;
     }
 
-    public void setIsRead(Byte isRead) {
+    public void setIsRead(Integer isRead) {
         this.isRead = isRead;
     }
 

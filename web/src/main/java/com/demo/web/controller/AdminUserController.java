@@ -17,8 +17,7 @@ import java.util.List;
  * @create: 2018-08-17 16:43
  **/
 @RestController
-@ResponseBody
-@RequestMapping("/todo")
+@RequestMapping("/todo/users")
 public class AdminUserController {
 
     Logger logger = LoggerFactory.getLogger(AdminUserController.class);

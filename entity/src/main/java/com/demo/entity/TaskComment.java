@@ -1,9 +1,8 @@
 package com.demo.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class TaskComment implements Serializable {
+public class TaskComment {
     private Integer id;
 
     private String commentId;

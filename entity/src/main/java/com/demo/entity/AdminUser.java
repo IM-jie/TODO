@@ -1,9 +1,8 @@
 package com.demo.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class AdminUser implements Serializable {
+public class AdminUser {
     private Integer id;
 
     private String userId;
@@ -28,13 +27,15 @@ public class AdminUser implements Serializable {
 
     private String salt;
 
-    private Byte permissionId;
+    private Integer permissionId;
 
     private String groupType;
 
     private String creator;
 
     private Date createTime;
+
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -132,11 +133,11 @@ public class AdminUser implements Serializable {
         this.salt = salt == null ? null : salt.trim();
     }
 
-    public Byte getPermissionId() {
+    public Integer getPermissionId() {
         return permissionId;
     }
 
-    public void setPermissionId(Byte permissionId) {
+    public void setPermissionId(Integer permissionId) {
         this.permissionId = permissionId;
     }
 
@@ -164,6 +165,14 @@ public class AdminUser implements Serializable {
         this.createTime = createTime;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -186,6 +195,7 @@ public class AdminUser implements Serializable {
         sb.append(", groupType=").append(groupType);
         sb.append(", creator=").append(creator);
         sb.append(", createTime=").append(createTime);
+        sb.append(", status=").append(status);
         sb.append("]");
         return sb.toString();
     }
