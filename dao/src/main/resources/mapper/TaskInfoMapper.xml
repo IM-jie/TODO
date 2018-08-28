@@ -46,8 +46,95 @@
       <if test="eqWorker != null">
         and worker = #{eqWorker,jdbcType=VARCHAR}
       </if>
-      
+	  <if test="eqStatus != null">
+        and status = #{eqStatus,jdbcType=TINYINT}
+      </if>
+      <if test="eqPrivateStatus != null">
+        and private_status = #{eqPrivateStatus,jdbcTyep=TINYINT}
+      </if>
+      <if test="eqMarkStatus != null">
+        and mark_status = #{eqMarkStatus,jdbcType=TINYINT}
+      </if>
+      <if test="eqPriority != null">
+        and priority =#{eqPriority,jdbcType=TINYINT}
+      </if>
+      <if test="eqStartTime != null">
+        and start_time = #{eqStartTime,jdbcType=TIMESTAMP}
+      </if>
+	  <if test="eqEndTime != null">
+        and end_time = #{eqEndTime,jdbcType=TIMESTAMP}
+      </if>
+	  <if test="eqCreateTime != null">
+        and create_time = #{eqCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="eqFinishTime != null">
+        and finish_time = #{eqFinishTime,jdbcType=TIMESTAMP}
+      </if>
+	  <if test="eqCreatorId != null">
+        and creator_id = #{eqCreatorId,jdbcTyep=VARCHAR}
+      </if>
+	  <if test="eqTaskId != null">
+        and finisher_id = #{eqTaskId,jdbcTyep=VARCHAR}
+      </if>
+	  <if test="eqWorkerId != null">
+        and worker_id = #{eqWorkerId,jdbcTyep=VARCHAR}
+      </if>
     </where>
+  </sql>
+  <sql id="ByMap_Set_Clause">
+    <set>
+      <if test="Id != null">
+        id = #{Id,jdbcType=INTEGER}
+      </if>
+      <if test="TaskId != null">
+        task_id = #{TaskId,jdbcTyep=VARCHAR}
+      </if>
+      <if test="Content != null">
+        content = #{Content,jdbcType=VARCHAR}
+      </if>
+      <if test="Creator != null">
+        creator =#{Creator,jdbcType=VARCHAR}
+      </if>
+      <if test="Finisher != null">
+        finisher = #{Finisher,jdbcType=VARCHAR}
+      </if>
+      <if test="Worker != null">
+        worker = #{Worker,jdbcType=VARCHAR}
+      </if>
+	  <if test="Status != null">
+        status = #{Status,jdbcType=TINYINT}
+      </if>
+      <if test="PrivateStatus != null">
+        private_status = #{PrivateStatus,jdbcTyep=TINYINT}
+      </if>
+      <if test="MarkStatus != null">
+        mark_status = #{MarkStatus,jdbcType=TINYINT}
+      </if>
+      <if test="Priority != null">
+        priority =#{Priority,jdbcType=TINYINT}
+      </if>
+      <if test="StartTime != null">
+        start_time = #{StartTime,jdbcType=TIMESTAMP}
+      </if>
+	  <if test="EndTime != null">
+        end_time = #{EndTime,jdbcType=TIMESTAMP}
+      </if>
+	  <if test="CreateTime != null">
+        create_time = #{CreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="FinishTime != null">
+        finish_time = #{FinishTime,jdbcType=TIMESTAMP}
+      </if>
+	  <if test="CreatorId != null">
+        creator_id = #{CreatorId,jdbcTyep=VARCHAR}
+      </if>
+	  <if test="TaskId != null">
+        finisher_id = #{TaskId,jdbcTyep=VARCHAR}
+      </if>
+	  <if test="WorkerId != null">
+        worker_id = #{WorkerId,jdbcTyep=VARCHAR}
+      </if>
+    </set>
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
