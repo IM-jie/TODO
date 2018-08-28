@@ -36,15 +36,15 @@ public class LoginController {
     @GetMapping("/login")
     public Result login(@RequestParam(value = "mail") String mail, @RequestParam(value = "password") String password) throws Exception {
         try {
-            logger.info("密码" + PasswordCryptoUtil.encode("123456123456"));
             AdminUser adminUser = iAdminUserSV.login(mail, password);
             if (StringUtils.isEmpty(adminUser)) {
-                return ResultUtil.error(1001, "邮箱或密码错误");
+                return ResultUtil.error(1002, "邮箱或密码错误");
             } else {
+                logger.info("用户登录成功");
                 Jedis redis = jedisPool.getResource();
                 String userJson = JSON.toJSONString(adminUser);
                 redis.setex("loginUser", 60 * 30, userJson);
-                return ResultUtil.success("登录成功");
+                return ResultUtil.success(1001,"登录成功");
             }
         } catch (Exception e) {
             logger.info(""+e);

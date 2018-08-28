@@ -24,7 +24,12 @@ public class ResultUtil {
     public static Result success(){
         return success(null);
     }
-
+    public static Result success(int code, String msg){
+        Result result = new Result();
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
     /**
      * 当错误时返回的值
      */
