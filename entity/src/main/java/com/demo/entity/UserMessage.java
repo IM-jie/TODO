@@ -2,6 +2,9 @@ package com.demo.entity;
 
 import java.util.Date;
 
+/**
+ * @author mac
+ */
 public class UserMessage {
     private Integer id;
 
