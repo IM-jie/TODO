@@ -11,16 +11,12 @@ import java.util.List;
  * @create: 2018-08-27 16:48
  **/
 public interface IAdminUserSV {
-    /**
-     * 获取用户列表
-     *
-     * @return
-     */
-    List<AdminUser> adminUserList();
 
     /**
      * 获取用户信息
      * @return
      */
     AdminUser getAdminUser();
+
+    AdminUser getAdminUser(String mail,String password);
 }

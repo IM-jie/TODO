@@ -23,13 +23,6 @@ public class AdminUserSVImpl implements IAdminUserSV {
     Logger logger = LoggerFactory.getLogger(AdminUserSVImpl.class);
     @Autowired
     private AdminUserMapper adminUserMapper;
-    @Override
-    public List<AdminUser> adminUserList()
-    {
-        List<AdminUser> adminUserList = new ArrayList<>();
-        adminUserList.add(adminUserMapper.selectByPrimaryKey(1));
-        return adminUserList;
-    }
 
     @Override
     public AdminUser getAdminUser()

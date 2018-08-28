@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/todo")
 public class LoginController {
 
+
     @GetMapping("/login")
     public Result login(@RequestParam(value = "mail")String mail,@RequestParam(value = "password")String password)
     {
