@@ -50,9 +50,9 @@ public class AdminUserSVImpl implements IAdminUserSV {
             String encodePassword = PasswordCryptoUtil.encode(password + adminUser.getSalt());
             logger.info(encodePassword);
             logger.info(adminUser.getPassword());
-            logger.info(""+adminUser.getPassword().equals(encodePassword));
+            logger.info("" + adminUser.getPassword().equals(encodePassword));
             if (adminUser.getPassword().equals(encodePassword)) {
-                logger.info("返回用户信息"+adminUser);
+                logger.info("返回用户信息" + adminUser);
                 return adminUser;
             } else {
                 throw new Exception("密码错误");
@@ -60,5 +60,8 @@ public class AdminUserSVImpl implements IAdminUserSV {
         } else {
             throw new Exception("用户不存在");
         }
+    }
+    public AdminUser getAdminUser(String mail, String password) {
+        return null;
     }
 }

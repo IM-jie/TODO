@@ -86,6 +86,6 @@ upload_dir/
 
 
 
-dao/pom.xml
+dao/*.xml
 service/src/main/resources/*.properties
 web/src/main/resources/*.properties
