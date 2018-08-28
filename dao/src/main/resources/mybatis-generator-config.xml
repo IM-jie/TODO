@@ -51,45 +51,45 @@
             <!--<columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
         </table>
 
-        <table tableName="t_admin_user" domainObjectName="AdminUser" enableSelectByExample="false"
-               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
-            <columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-            <columnOverride column="permission_id" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-        </table>
+        <!--<table tableName="t_admin_user" domainObjectName="AdminUser" enableSelectByExample="false"-->
+               <!--enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true" />-->
+            <!--<columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+            <!--<columnOverride column="permission_id" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+        <!--</table>-->
 
-        <table tableName="t_task_comment" domainObjectName="TaskComment" enableSelectByExample="false"
-               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
-            <columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-        </table>
+        <!--<table tableName="t_task_comment" domainObjectName="TaskComment" enableSelectByExample="false"-->
+               <!--enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true" />-->
+            <!--<columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+        <!--</table>-->
 
-        <table tableName="t_task_info" domainObjectName="TaskInfo" enableSelectByExample="false"
-               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
-            <columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-            <columnOverride column="private_status" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-            <columnOverride column="mark_status" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-            <columnOverride column="priority" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-        </table>
+        <!--<table tableName="t_task_info" domainObjectName="TaskInfo" enableSelectByExample="false"-->
+               <!--enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true" />-->
+            <!--<columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+            <!--<columnOverride column="private_status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+            <!--<columnOverride column="mark_status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+            <!--<columnOverride column="priority" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+        <!--</table>-->
 
-        <table tableName="t_task_record" domainObjectName="TaskRecord" enableSelectByExample="false"
-               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
-            <columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-            <columnOverride column="operate_type" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-        </table>
+        <!--<table tableName="t_task_record" domainObjectName="TaskRecord" enableSelectByExample="false"-->
+               <!--enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true" />-->
+            <!--<columnOverride column="status" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+            <!--<columnOverride column="operate_type" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+        <!--</table>-->
 
-        <table tableName="t_task_user" domainObjectName="TaskUser" enableSelectByExample="false"
-               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
-        </table>
+        <!--<table tableName="t_task_user" domainObjectName="TaskUser" enableSelectByExample="false"-->
+               <!--enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true" />-->
+        <!--</table>-->
 
-        <table tableName="t_user_message" domainObjectName="UserMessage" enableSelectByExample="false"
-               enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
-            <columnOverride column="is_read" javaType="java.lang.Integer" jdbcType="TINYINT"/>
-        </table>
+        <!--<table tableName="t_user_message" domainObjectName="UserMessage" enableSelectByExample="false"-->
+               <!--enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true" />-->
+            <!--<columnOverride column="is_read" javaType="java.lang.Integer" jdbcType="TINYINT"/>-->
+        <!--</table>-->
 
     </context>
 </generatorConfiguration>
