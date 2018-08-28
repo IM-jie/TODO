@@ -46,11 +46,7 @@ public class AdminUserSVImpl implements IAdminUserSV {
         List<AdminUser> adminUserList = adminUserMapper.selectByMap(params);
         if (!adminUserList.isEmpty()) {
             adminUser = adminUserList.get(0);
-            logger.info(password + adminUser.getSalt());
-            String encodePassword = PasswordCryptoUtil.encode(password + adminUser.getSalt());
-            logger.info(encodePassword);
-            logger.info(adminUser.getPassword());
-            logger.info("" + adminUser.getPassword().equals(encodePassword));
+            String encodePassword = PasswordCryptoUtil.encode((password + adminUser.getSalt())).trim();
             if (adminUser.getPassword().equals(encodePassword)) {
                 logger.info("返回用户信息" + adminUser);
                 return adminUser;

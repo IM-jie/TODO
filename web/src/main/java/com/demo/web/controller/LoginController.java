@@ -36,7 +36,6 @@ public class LoginController {
     @GetMapping("/login")
     public Result login(@RequestParam(value = "mail") String mail, @RequestParam(value = "password") String password) throws Exception {
         try {
-            logger.info("密码" + PasswordCryptoUtil.encode("123456123456"));
             AdminUser adminUser = iAdminUserSV.login(mail, password);
             if (StringUtils.isEmpty(adminUser)) {
                 return ResultUtil.error(1001, "邮箱或密码错误");

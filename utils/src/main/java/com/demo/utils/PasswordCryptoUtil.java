@@ -6,6 +6,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @program: parent
@@ -28,7 +29,7 @@ public class PasswordCryptoUtil {
         try {
             bt = (new BASE64Decoder()).decodeBuffer(key);
             //如果出现乱码可以改成： String(bt, "utf-8")或 gbk
-            return new String(bt);
+            return new String(bt, StandardCharsets.UTF_8);
         } catch (IOException e) {
             logger.info("解密错误"+e);
             return "";
