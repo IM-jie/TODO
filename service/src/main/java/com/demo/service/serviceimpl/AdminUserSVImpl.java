@@ -61,7 +61,4 @@ public class AdminUserSVImpl implements IAdminUserSV {
             throw new Exception("用户不存在");
         }
     }
-    public AdminUser getAdminUser(String mail, String password) {
-        return null;
-    }
 }
