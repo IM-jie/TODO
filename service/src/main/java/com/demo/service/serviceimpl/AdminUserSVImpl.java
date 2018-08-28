@@ -30,4 +30,9 @@ public class AdminUserSVImpl implements IAdminUserSV {
         logger.info("获取单个用户信息");
         return adminUserMapper.selectByPrimaryKey(1);
     }
+
+    @Override
+    public AdminUser getAdminUser(String mail, String password) {
+        return null;
+    }
 }
