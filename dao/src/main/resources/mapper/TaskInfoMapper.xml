@@ -142,6 +142,13 @@
     from t_task_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List"/>
+    from t_task_info
+    where
+    <include refid="ByMap_Where_Clause"/>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_task_info
     where id = #{id,jdbcType=INTEGER}
