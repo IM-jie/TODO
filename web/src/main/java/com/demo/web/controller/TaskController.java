@@ -71,20 +71,17 @@ public class TaskController {
     @GetMapping("/{taskid}")
     public Result getTaskInfo(@PathVariable(name = "taskid") String taskid) throws GeneralException {
         try{
-            Result result = new Result();
             if (EmptyUtil.isEmpty(taskid)){
-                result.setCode(1);
-                result.setMsg("taskid为空");
-                return result;
+                return new Result(1,"taskid为空");
             }
+            return new Result(0,"获取成功",iTaskInfoSV.getOneTaskInfo(taskid));
         }catch (Exception e){
             LOGGER.info("异常"+e);
             if (e instanceof GeneralException) {
                 return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
             }
+            throw new GeneralException("系统错误");
         }
-
-        return null;
     }
 
 }
