@@ -83,3 +83,9 @@ fabric.properties
 *DS_Store
 logs/
 upload_dir/
+
+
+
+dao/pom.xml
+service/src/main/resources/*.properties
+web/src/main/resources/*.properties
