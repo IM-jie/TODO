@@ -39,16 +39,15 @@ public class AdminUserSVImpl implements IAdminUserSV {
 
     @Override
     public AdminUser login(String mail, String password) throws Exception {
-        logger.info("用户登录");
         AdminUser adminUser;
         Map<String, Object> params = new HashMap<>();
         params.put("eqMail", mail);
         List<AdminUser> adminUserList = adminUserMapper.selectByMap(params);
         if (!adminUserList.isEmpty()) {
             adminUser = adminUserList.get(0);
-            String encodePassword = PasswordCryptoUtil.encode((password + adminUser.getSalt())).trim();
+            String encodePassword = PasswordCryptoUtil.encode((password + adminUser.getSalt()));
             if (adminUser.getPassword().equals(encodePassword)) {
-                logger.info("返回用户信息" + adminUser);
+                logger.info("登录用户信息" + adminUser);
                 return adminUser;
             } else {
                 throw new Exception("密码错误");

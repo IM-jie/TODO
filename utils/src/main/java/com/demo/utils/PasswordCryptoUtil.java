@@ -29,7 +29,7 @@ public class PasswordCryptoUtil {
         try {
             bt = (new BASE64Decoder()).decodeBuffer(key);
             //如果出现乱码可以改成： String(bt, "utf-8")或 gbk
-            return new String(bt, StandardCharsets.UTF_8);
+            return new String(bt, StandardCharsets.UTF_8).trim();
         } catch (IOException e) {
             logger.info("解密错误"+e);
             return "";
@@ -45,6 +45,6 @@ public class PasswordCryptoUtil {
      */
     public static String encode(String key) {
         byte[] bt = key.getBytes();
-        return (new BASE64Encoder()).encodeBuffer(bt);
+        return (new BASE64Encoder()).encodeBuffer(bt).trim();
     }
 }

@@ -40,6 +40,7 @@ public class LoginController {
             if (StringUtils.isEmpty(adminUser)) {
                 return ResultUtil.error(1001, "邮箱或密码错误");
             } else {
+                logger.info("用户登录成功");
                 Jedis redis = jedisPool.getResource();
                 String userJson = JSON.toJSONString(adminUser);
                 redis.setex("loginUser", 60 * 30, userJson);
