@@ -1,10 +1,15 @@
 package com.demo.web.interceptor;
 
+import com.demo.entity.AdminUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @program: parent
@@ -14,13 +19,25 @@ import javax.servlet.http.HttpServletResponse;
  **/
 public class AppInterceptor implements HandlerInterceptor {
 
+    @Autowired
+    private JedisPool jedisPool;
+
+//    private Jedis redis = jedisPool.getResource();
     /**
      * 在请求处理之前进行调用（Controller方法调用之前
      */
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        System.out.println("preHandle被调用");
+
         return true;
+//        //用户已登录
+//        if (redis.get("loginUser") != null) {
+//            httpServletRequest.setAttribute("loginUser",redis.get("loginUser"));
+//            return true;
+//        } else {//用户未登录，直接跳转登录页面
+//            httpServletResponse.sendRedirect("/login");
+//            return false;
+//        }
     }
 
     /**
