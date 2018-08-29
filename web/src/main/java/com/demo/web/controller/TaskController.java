@@ -8,10 +8,7 @@ import com.demo.utils.common.EmptyUtil;
 import com.demo.utils.common.GeneralException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @program: parent
@@ -77,8 +74,9 @@ public class TaskController {
      * }
      */
     @GetMapping("/{taskid}")
-    public Result getTaskInfo(@PathVariable(name = "taskid") String taskid) throws GeneralException {
+    public Result getTaskInfo(@RequestAttribute(name = "loginUser") String loginUser,@PathVariable(name = "taskid") String taskid) throws GeneralException {
         try{
+            LOGGER.info("loginUser"+loginUser);
             LOGGER.info("taskid-->"+taskid);
             if (EmptyUtil.isEmpty(taskid)){
                 return new Result(1,"taskid为空");

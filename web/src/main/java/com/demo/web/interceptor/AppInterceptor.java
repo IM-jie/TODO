@@ -1,12 +1,16 @@
 package com.demo.web.interceptor;
 
 import com.demo.entity.AdminUser;
+import com.demo.entity.common.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,16 +23,39 @@ import javax.servlet.http.HttpSession;
  **/
 public class AppInterceptor implements HandlerInterceptor {
 
+    private Logger LOGGER = LoggerFactory.getLogger(AppInterceptor.class);
+
     @Autowired
     private JedisPool jedisPool;
 
 //    private Jedis redis = jedisPool.getResource();
+
     /**
      * 在请求处理之前进行调用（Controller方法调用之前
      */
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
+        Cookie[] cookies = httpServletRequest.getCookies();
+        if(cookies==null){
+//            LOGGER.info("cookie为空");
+//            Result result=new Result(1,"cookie为空");
+//            httpServletResponse.setCharacterEncoding("UTF-8");
+//            httpServletResponse.setContentType("application/json; charset=utf-8");
+//            httpServletResponse.getWriter().write(result.toString());
+//            return false;
+            Cookie cookie=new Cookie("Info_side","黄杰");
+            cookie.setPath("/");
+            cookie.setMaxAge(60*30);
+        }
+        httpServletRequest.setAttribute("loginUser","黄杰");
+//        for (Cookie cookie : cookies) {
+//            if(cookie.getName().equals("loginUser")){
+//                String str = cookie.getValue();
+//                Jedis redis = jedisPool.getResource();
+//                String user=redis.get(str);
+//                httpServletRequest.setAttribute("loginUser",user);
+//            }
+//        }
         return true;
 //        //用户已登录
 //        if (redis.get("loginUser") != null) {
@@ -56,4 +83,5 @@ public class AppInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
         System.out.println("afterCompletion被调用");
     }
+
 }

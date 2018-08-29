@@ -2,6 +2,7 @@ package com.demo.service;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author mac
  */
 @SpringBootApplication
+@EnableAutoConfiguration
 @MapperScan("com.demo.dao")
 @ComponentScan(basePackages = {"com.demo.utils"})
 public class ServiceApplication {
