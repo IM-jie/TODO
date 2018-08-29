@@ -2,9 +2,11 @@ package com.demo.web.config;
 
 
 import com.demo.web.interceptor.AppInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import redis.clients.jedis.JedisPool;
 
 /**
  * @program: parent
@@ -14,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  **/
 @Configuration
 public class WebConfiguration extends WebMvcConfigurationSupport {
+
+
 
     /**
      * 增加拦截器

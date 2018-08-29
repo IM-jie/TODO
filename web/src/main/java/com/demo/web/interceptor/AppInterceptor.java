@@ -7,6 +7,7 @@ import com.demo.utils.PasswordCryptoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import redis.clients.jedis.Jedis;
@@ -15,6 +16,7 @@ import redis.clients.jedis.JedisPool;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.beans.beancontext.BeanContextSupport;
 
 /**
  * @program: parent
@@ -22,9 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author: zouweidong
  * @create: 2018-08-22 09:27
  **/
+@Component
 public class AppInterceptor implements HandlerInterceptor {
 
-    private Logger LOGGER = LoggerFactory.getLogger(AppInterceptor.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(AppInterceptor.class);
 
     @Autowired
     private JedisPool jedisPool;
@@ -50,11 +53,11 @@ public class AppInterceptor implements HandlerInterceptor {
                 if (cookie.getName().equals(CommonConstants.COOKIE_KEY)) {
                     String str = PasswordCryptoUtil.decode(cookie.getValue());
 //                    LOGGER.info("Str--->"+str);
-//                    Jedis redis = jedisPool.getResource();
-//                    String user = redis.get(str);
-//                    AdminUser adminUser=JSONObject.parseObject(user,AdminUser.class);
-                    AdminUser adminUser=new AdminUser();
-                    adminUser.setUsername("黄杰");
+                    Jedis redis = jedisPool.getResource();
+                    String user = redis.get(str);
+                    AdminUser adminUser=JSONObject.parseObject(user,AdminUser.class);
+//                    AdminUser adminUser=new AdminUser();
+//                    adminUser.setUsername("黄杰");
                     httpServletRequest.setAttribute("loginUser", adminUser);
                 }
             }
