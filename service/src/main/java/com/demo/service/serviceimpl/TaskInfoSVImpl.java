@@ -29,9 +29,9 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description；获取任务详细信息
      */
     @Override
-    public TaskInfo getOneTaskInfo(String taskId) throws GeneralException {
-        Map<String, String> param=new HashMap<>();
-        param.put("taskid",taskId);
+    public TaskInfo getOneTaskInfo(String taskId) throws GeneralException{
+        Map<String, Object> param=new HashMap<>();
+        param.put("eqTaskid",taskId);
         return taskInfoMapper.selectByMap(param);
     }
 

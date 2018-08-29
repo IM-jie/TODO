@@ -52,20 +52,28 @@ public class TaskController {
      * @apiSuccess (角色信息字段说明){Integer} roleModifier  修改人
      * @apiSuccessExample json  返回样例
      * {
-     * "returnCode": "0",
-     * "returnMessage": "查询成功",
-     * "bean":{
-     * "roleModified": "2018-08-01 18:13:30",
-     * "roleCity": "郑州",
-     * "roleId": "2",
-     * "roleModifier": "huangjie",
-     * "roleName": "开发",
-     * "roleProvince": "河南",
-     * "roleCreator": "huangjie",
-     * "id": 1,
-     * "roleCreate": "2018-08-01 18:12:30",
-     * "status": 1
-     * }
+     *     "code": 0,
+     *     "msg": "获取成功",
+     *     "data": {
+     *         "id": 1,
+     *         "taskId": "1",
+     *         "content": "新建",
+     *         "creator": "黄杰",
+     *         "finisher": "黄杰",
+     *         "worker": "黄杰",
+     *         "status": 1,
+     *         "privateStatus": 0,
+     *         "markStatus": 0,
+     *         "priority": 0,
+     *         "startTime": 1535523954000,
+     *         "endTime": 1535523958000,
+     *         "createTime": 1535523960000,
+     *         "finishTime": 1535523963000,
+     *         "commentCount": 3,
+     *         "creatorId": "1",
+     *         "finisherId": "1",
+     *         "workerId": "1"
+     *     }
      * }
      */
     @GetMapping("/{taskid}")
