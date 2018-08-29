@@ -2,6 +2,8 @@ package com.demo.dao;
 
 import com.demo.entity.TaskInfo;
 
+import java.util.Map;
+
 /**
  * @author mac
  */
@@ -17,4 +19,6 @@ public interface TaskInfoMapper {
     int updateByPrimaryKeySelective(TaskInfo record);
 
     int updateByPrimaryKey(TaskInfo record);
+
+    TaskInfo selectByMap(Map<String, String> params);
 }

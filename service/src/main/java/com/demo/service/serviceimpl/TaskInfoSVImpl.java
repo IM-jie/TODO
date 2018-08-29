@@ -1,7 +1,14 @@
 package com.demo.service.serviceimpl;
 
+import com.alibaba.dubbo.config.annotation.Service;
+import com.demo.dao.TaskInfoMapper;
 import com.demo.entity.TaskInfo;
 import com.demo.service.iservice.ITaskInfoSV;
+import com.demo.utils.common.GeneralException;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @program: parent
@@ -10,15 +17,22 @@ import com.demo.service.iservice.ITaskInfoSV;
  * @create: 2018-08-28 15:21
  **/
 
+@Service
 public class TaskInfoSVImpl implements ITaskInfoSV {
+
+    @Autowired
+    private TaskInfoMapper taskInfoMapper;
+
     /**
      * @param taskId
      * @return
      * @description；获取任务详细信息
      */
     @Override
-    public TaskInfo getOneTaskInfo(String taskId) {
-        return null;
+    public TaskInfo getOneTaskInfo(String taskId) throws GeneralException {
+        Map<String, String> param=new HashMap<>();
+        param.put("taskid",taskId);
+        return taskInfoMapper.selectByMap(param);
     }
 
     /**
