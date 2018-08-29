@@ -47,7 +47,7 @@ public class LoginController {
                 return ResultUtil.success(1001,"登录成功");
             }
         } catch (Exception e) {
-            logger.info(""+e);
+            logger.info("系统出错"+e);
             throw new Exception("系统错误");
         }
     }

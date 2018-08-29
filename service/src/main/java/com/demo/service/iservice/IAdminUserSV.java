@@ -25,5 +25,5 @@ public interface IAdminUserSV {
      * @return
      * @throws Exception
      */
-    AdminUser login(String mail,String password) throws Exception;
+    AdminUser login(String mail,String password);
 }
