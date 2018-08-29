@@ -1,7 +1,9 @@
 package com.demo.web.interceptor;
 
+import com.alibaba.fastjson.JSONObject;
 import com.demo.entity.AdminUser;
-import com.demo.entity.common.Result;
+import com.demo.entity.constants.CommonConstants;
+import com.demo.utils.PasswordCryptoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import redis.clients.jedis.JedisPool;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @program: parent
@@ -28,34 +29,36 @@ public class AppInterceptor implements HandlerInterceptor {
     @Autowired
     private JedisPool jedisPool;
 
-//    private Jedis redis = jedisPool.getResource();
-
     /**
      * 在请求处理之前进行调用（Controller方法调用之前
      */
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         Cookie[] cookies = httpServletRequest.getCookies();
-        if(cookies==null){
+        if (cookies == null) {
 //            LOGGER.info("cookie为空");
 //            Result result=new Result(1,"cookie为空");
 //            httpServletResponse.setCharacterEncoding("UTF-8");
 //            httpServletResponse.setContentType("application/json; charset=utf-8");
 //            httpServletResponse.getWriter().write(result.toString());
 //            return false;
-            Cookie cookie=new Cookie("Info_side","黄杰");
+            Cookie cookie = new Cookie("Info_side", "黄杰");
             cookie.setPath("/");
-            cookie.setMaxAge(60*30);
+            cookie.setMaxAge(60 * 30);
+        } else {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(CommonConstants.COOKIE_KEY)) {
+                    String str = PasswordCryptoUtil.decode(cookie.getValue());
+//                    LOGGER.info("Str--->"+str);
+//                    Jedis redis = jedisPool.getResource();
+//                    String user = redis.get(str);
+//                    AdminUser adminUser=JSONObject.parseObject(user,AdminUser.class);
+                    AdminUser adminUser=new AdminUser();
+                    adminUser.setUsername("黄杰");
+                    httpServletRequest.setAttribute("loginUser", adminUser);
+                }
+            }
         }
-        httpServletRequest.setAttribute("loginUser","黄杰");
-//        for (Cookie cookie : cookies) {
-//            if(cookie.getName().equals("loginUser")){
-//                String str = cookie.getValue();
-//                Jedis redis = jedisPool.getResource();
-//                String user=redis.get(str);
-//                httpServletRequest.setAttribute("loginUser",user);
-//            }
-//        }
         return true;
 //        //用户已登录
 //        if (redis.get("loginUser") != null) {

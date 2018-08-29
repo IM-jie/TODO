@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.demo.entity.AdminUser;
 import com.demo.entity.common.Result;
+import com.demo.entity.constants.CacheConstants;
+import com.demo.entity.constants.CommonConstants;
 import com.demo.service.iservice.IAdminUserSV;
 import com.demo.utils.PasswordCryptoUtil;
 import com.demo.utils.common.ResultUtil;
@@ -14,6 +16,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @program: parent
@@ -34,16 +40,21 @@ public class LoginController {
     Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @GetMapping("/login")
-    public Result login(@RequestParam(value = "mail") String mail, @RequestParam(value = "password") String password) throws Exception {
+    public Result login(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,@RequestParam(value = "mail") String mail, @RequestParam(value = "password") String password) throws Exception {
         try {
             AdminUser adminUser = iAdminUserSV.login(mail, password);
             if (StringUtils.isEmpty(adminUser)) {
                 return ResultUtil.error(1002, "邮箱或密码错误");
             } else {
                 logger.info("用户登录成功");
-                Jedis redis = jedisPool.getResource();
                 String userJson = JSON.toJSONString(adminUser);
-                redis.setex("loginUser", 60 * 30, userJson);
+                Jedis redis = jedisPool.getResource();
+                String userKey = CacheConstants.USER_INFO_KEY+adminUser.getUsername();
+                redis.setex(userKey, 60 * 30, userJson);
+                Cookie cookie=new Cookie(CommonConstants.COOKIE_KEY,PasswordCryptoUtil.encode(userKey));
+                cookie.setPath("/");
+                cookie.setMaxAge(60*30);
+                httpServletResponse.addCookie(cookie);
                 return ResultUtil.success(1001,"登录成功");
             }
         } catch (Exception e) {

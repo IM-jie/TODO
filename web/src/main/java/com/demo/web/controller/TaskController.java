@@ -1,6 +1,7 @@
 package com.demo.web.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.demo.entity.AdminUser;
 import com.demo.entity.TaskInfo;
 import com.demo.entity.common.Result;
 import com.demo.service.iservice.ITaskInfoSV;
@@ -74,9 +75,9 @@ public class TaskController {
      * }
      */
     @GetMapping("/{taskid}")
-    public Result getTaskInfo(@RequestAttribute(name = "loginUser") String loginUser,@PathVariable(name = "taskid") String taskid) throws GeneralException {
+    public Result getTaskInfo(@RequestAttribute(name = "loginUser") AdminUser loginUser, @PathVariable(name = "taskid") String taskid) throws GeneralException {
         try{
-            LOGGER.info("loginUser"+loginUser);
+            LOGGER.info("loginUser"+loginUser.getUsername());
             LOGGER.info("taskid-->"+taskid);
             if (EmptyUtil.isEmpty(taskid)){
                 return new Result(1,"taskid为空");
