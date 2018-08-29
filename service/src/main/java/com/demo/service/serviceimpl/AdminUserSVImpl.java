@@ -38,7 +38,7 @@ public class AdminUserSVImpl implements IAdminUserSV {
     }
 
     @Override
-    public AdminUser login(String mail, String password) throws Exception {
+    public AdminUser login(String mail, String password) {
         AdminUser adminUser;
         Map<String, Object> params = new HashMap<>();
         params.put("eqMail", mail);
@@ -50,10 +50,10 @@ public class AdminUserSVImpl implements IAdminUserSV {
                 logger.info("登录用户信息" + adminUser);
                 return adminUser;
             } else {
-                throw new Exception("密码错误");
+                return null;
             }
         } else {
-            throw new Exception("用户不存在");
+            return null;
         }
     }
 }

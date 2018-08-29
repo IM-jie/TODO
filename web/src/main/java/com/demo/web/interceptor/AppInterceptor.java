@@ -20,7 +20,6 @@ public class AppInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         System.out.println("preHandle被调用");
-        //如果false，停止流程，api被拦截
         return true;
     }
 
@@ -30,6 +29,7 @@ public class AppInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         System.out.println("postHandle被调用");
+
     }
 
     /**
