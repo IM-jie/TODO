@@ -13,12 +13,6 @@ import java.util.List;
 public interface IAdminUserSV {
 
     /**
-     * 获取用户信息
-     * @return
-     */
-    AdminUser getAdminUser();
-
-    /**
      * 根据邮箱和密码获取用户信息
      * @param mail
      * @param password
@@ -26,4 +20,16 @@ public interface IAdminUserSV {
      * @throws Exception
      */
     AdminUser login(String mail,String password);
+
+    /**
+     * 获取用户列表
+     * @return
+     */
+    List<AdminUser> listAdminUser();
+
+    /**
+     * 获取任务关注用户列表
+     * @return
+     */
+    List<AdminUser> listAdminUserByTaskId(String taskId);
 }
