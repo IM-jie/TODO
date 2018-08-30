@@ -3,15 +3,14 @@ package com.demo.web.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.demo.entity.AdminUser;
 import com.demo.entity.common.Result;
+import com.demo.entity.param.AdminUserAddParam;
 import com.demo.service.iservice.IAdminUserSV;
 import com.demo.utils.common.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -51,5 +50,32 @@ public class AdminUserController {
     public Result listAdminUserByTaskId(@PathVariable(name = "taskId") String taskId) {
         List<AdminUser> adminUserList = iAdminUserSV.listAdminUserByTaskId(taskId);
         return ResultUtil.success(adminUserList);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public Result deleteAdminUser(@PathVariable(name = "id") Integer id) {
+        if (iAdminUserSV.deleteAdminUser(id) != 0) {
+            return ResultUtil.success(1003, "删除用户成功");
+        } else {
+            return ResultUtil.error(1004, "删除用户失败");
+        }
+    }
+
+    @PostMapping(value = "")
+    public Result addAdminUser(@RequestAttribute(name = "loginUser") AdminUser loginUser, @RequestBody @Valid AdminUserAddParam adminUserAddParam)
+    {
+        String username = adminUserAddParam.getUsername();
+        String mail = adminUserAddParam.getMail();
+        if(true)
+        {
+            if(0 != iAdminUserSV.addAdminUser(adminUserAddParam,loginUser))
+            {
+                return ResultUtil.success(1001,"添加用户成功");
+            }else {
+                return ResultUtil.error(1002,"添加用户失败");
+            }
+        }else {
+            return ResultUtil.error(1003,"用户名或邮箱已存在");
+        }
     }
 }

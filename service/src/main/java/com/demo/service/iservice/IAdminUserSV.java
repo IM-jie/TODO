@@ -1,6 +1,7 @@
 package com.demo.service.iservice;
 
 import com.demo.entity.AdminUser;
+import com.demo.entity.param.AdminUserAddParam;
 
 import java.util.List;
 
@@ -29,7 +30,22 @@ public interface IAdminUserSV {
 
     /**
      * 获取任务关注用户列表
+     * @param taskId
      * @return
      */
     List<AdminUser> listAdminUserByTaskId(String taskId);
+
+    /**
+     * 根据主键删除用户
+     * @param id
+     * @return
+     */
+    int deleteAdminUser(Integer id);
+
+    /**
+     * 添加用户
+     * @param adminUserAddParam
+     * @return
+     */
+    int addAdminUser(AdminUserAddParam adminUserAddParam,AdminUser loginUser);
 }

@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -25,7 +24,7 @@ import java.util.List;
 public class WebConfiguration extends WebMvcConfigurationSupport {
 
     /**
-     *  定义时间格式转换器
+     * 定义时间格式转换器
      */
     @Bean
     public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter() {
@@ -39,6 +38,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
     /**
      * 添加转换器
+     *
      * @param converters
      */
     @Override
@@ -49,8 +49,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
     }
 
     @Bean
-    public AppInterceptor appInterceptor()
-    {
+    public AppInterceptor appInterceptor() {
         return new AppInterceptor();
     }
 

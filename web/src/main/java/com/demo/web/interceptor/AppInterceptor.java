@@ -44,10 +44,15 @@ public class AppInterceptor implements HandlerInterceptor {
 //            httpServletResponse.setContentType("application/json; charset=utf-8");
 //            httpServletResponse.getWriter().write(result.toString());
 //            return false;
-            Cookie cookie = new Cookie("Info_side", "黄杰");
+            AdminUser loginUser = new AdminUser();
+            loginUser.setUsername("admin");
+            loginUser.setUserId("123456");
+            loginUser.setPermissionId(0);
+
+            Cookie cookie = new Cookie("Info_side", loginUser);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);
-            return false;
+            return true;
         } else {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CommonConstants.COOKIE_KEY)) {
