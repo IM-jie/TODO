@@ -52,6 +52,7 @@ public class AppInterceptor implements HandlerInterceptor {
             Cookie cookie = new Cookie("Info_side", string);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);
+            httpServletResponse.addCookie(cookie);
             httpServletRequest.setAttribute("loginUser", loginUser);
             return true;
         } else {
