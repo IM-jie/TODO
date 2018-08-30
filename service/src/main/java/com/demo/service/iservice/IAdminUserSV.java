@@ -45,7 +45,11 @@ public interface IAdminUserSV {
     /**
      * 添加用户
      * @param adminUserAddParam
+     * @param loginUser
      * @return
      */
     int addAdminUser(AdminUserAddParam adminUserAddParam,AdminUser loginUser);
+
+    boolean isExistUsername(String username);
+    boolean isExistMail(String mail);
 }

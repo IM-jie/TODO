@@ -13,8 +13,6 @@ import com.demo.utils.RandomStringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import java.util.*;
 
@@ -39,56 +37,76 @@ public class AdminUserSVImpl implements IAdminUserSV {
     NumberComponent numberComponent;
 
     @Override
-    public List<AdminUser> listAdminUser()
-    {
-        return adminUserMapper.selectByMap(new HashMap<>());
+    public List<AdminUser> listAdminUser() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("neqStatus", 0);
+        return adminUserMapper.selectByMap(params);
     }
 
     @Override
-    public List<AdminUser> listAdminUserByTaskId(String taskId)
-    {
-        Map<String,Object> params = new HashMap<>();
-        params.put("eqTaskId",taskId);
+    public List<AdminUser> listAdminUserByTaskId(String taskId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqTaskId", taskId);
         List<TaskUser> taskUserList = taskUserMapper.selectByMap(params);
         List<AdminUser> adminUserList = new ArrayList<>();
-        for(int i=0;i<taskUserList.size();i++)
-        {
-            Map<String,Object>param = new HashMap<>();
-            param.put("eqUserId",taskUserList.get(i).getUserId());
+        for (int i = 0; i < taskUserList.size(); i++) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("eqUserId", taskUserList.get(i).getUserId());
+            params.put("neqStatus", 0);
             adminUserList.add(adminUserMapper.selectByMap(param).get(0));
         }
         return adminUserList;
     }
 
     @Override
-    public int deleteAdminUser(Integer id)
-    {
-        Map<String,Object>params = new HashMap<>();
-        params.put("eqId",id);
-        params.put("status",0);
+    public int deleteAdminUser(Integer id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqId", id);
+        params.put("status", 0);
         return adminUserMapper.updateByMap(params);
     }
 
     @Override
-    public int addAdminUser(AdminUserAddParam adminUserAddParam,AdminUser loginUser)
-    {
+    public int addAdminUser(AdminUserAddParam adminUserAddParam, AdminUser loginUser) {
         AdminUser adminUser = new AdminUser();
         String userId = numberComponent.getGuid();
         adminUser.setUserId(userId);
         adminUser.setUsername(adminUserAddParam.getUsername());
         adminUser.setMail(adminUserAddParam.getMail());
-        String password = adminUserAddParam.getPassword();
         String salt = RandomStringUtil.getRandomString(8);
         adminUser.setSalt(salt);
-        adminUser.setPassword(PasswordCryptoUtil.encode(password+salt));
+        adminUser.setPassword(PasswordCryptoUtil.encode(adminUserAddParam.getPassword() + salt));
         adminUser.setPermissionId(1);
         adminUser.setStatus(1);
         adminUser.setCreateTime(new Date(System.currentTimeMillis()));
         adminUser.setCreator(loginUser.getUsername());
-        return adminUserMapper.insertSelective(adminUser);
+        return adminUserMapper.insert(adminUser);
     }
 
+    @Override
+    public boolean isExistUsername(String username) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqUserName", username);
+        params.put("neqStatus", 0);
+        if (adminUserMapper.selectByMap(params).isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
+    @Override
+    public boolean isExistMail(String mail)
+    {
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqMail", mail);
+        params.put("neqStatus", 0);
+        if (adminUserMapper.selectByMap(params).isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     @Override
     public AdminUser login(String mail, String password) {

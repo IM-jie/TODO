@@ -2,6 +2,7 @@ package com.demo.entity.param;
 
 
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 
 /**
  * @program: parent
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
  * @author: zouweidong
  * @create: 2018-08-30 15:26
  **/
-public class AdminUserAddParam {
+public class AdminUserAddParam implements Serializable {
 
     /**
      * 用户名
@@ -20,13 +21,13 @@ public class AdminUserAddParam {
     /**
      * 用户邮箱
      */
-    @NotEmpty(message = "手机号码不能为空")
+    @NotEmpty(message = "用户邮箱不能为空")
     private String mail;
 
     /**
      * 密码
      */
-    @NotEmpty(message = "用户昵称不能为空")
+    @NotEmpty(message = "密码不能为空")
     private String password;
 
     public String getUsername() {

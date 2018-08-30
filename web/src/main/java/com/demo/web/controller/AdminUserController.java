@@ -62,20 +62,18 @@ public class AdminUserController {
     }
 
     @PostMapping(value = "")
-    public Result addAdminUser(@RequestAttribute(name = "loginUser") AdminUser loginUser, @RequestBody @Valid AdminUserAddParam adminUserAddParam)
-    {
+    public Result addAdminUser(@RequestAttribute(name = "loginUser") AdminUser loginUser, @RequestBody @Valid AdminUserAddParam adminUserAddParam) {
         String username = adminUserAddParam.getUsername();
         String mail = adminUserAddParam.getMail();
-        if(true)
-        {
-            if(0 != iAdminUserSV.addAdminUser(adminUserAddParam,loginUser))
-            {
-                return ResultUtil.success(1001,"添加用户成功");
-            }else {
-                return ResultUtil.error(1002,"添加用户失败");
+        logger.info("添加用户"+adminUserAddParam.getUsername());
+        if (!iAdminUserSV.isExistUsername(username)&&!iAdminUserSV.isExistMail(mail)) {
+            if (iAdminUserSV.addAdminUser(adminUserAddParam, loginUser) != 0) {
+                return ResultUtil.success(1001, "添加用户成功");
+            } else {
+                return ResultUtil.error(1002, "添加用户失败");
             }
-        }else {
-            return ResultUtil.error(1003,"用户名或邮箱已存在");
+        } else {
+            return ResultUtil.error(1003, "用户名或邮箱已存在");
         }
     }
 }
