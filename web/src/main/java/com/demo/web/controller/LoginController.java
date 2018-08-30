@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * @create: 2018-08-28 09:13
  **/
 @RestController
-@RequestMapping("/todo")
+@RequestMapping("/mytodo")
 public class LoginController {
 
     @Reference

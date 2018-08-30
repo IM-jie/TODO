@@ -49,12 +49,12 @@ public class AppInterceptor implements HandlerInterceptor {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CommonConstants.COOKIE_KEY)) {
                     String str = PasswordCryptoUtil.decode(cookie.getValue());
-//                    LOGGER.info("Str--->"+str);
-//                    Jedis redis = jedisPool.getResource();
-//                    String user = redis.get(str);
-//                    AdminUser adminUser=JSONObject.parseObject(user,AdminUser.class);
-                    AdminUser adminUser=new AdminUser();
-                    adminUser.setUsername("黄杰");
+                    LOGGER.info("Str--->"+str);
+                    Jedis redis = jedisPool.getResource();
+                    String user = redis.get(str);
+                    AdminUser adminUser=JSONObject.parseObject(user,AdminUser.class);
+//                    AdminUser adminUser=new AdminUser();
+//                    adminUser.setUsername("黄杰");
                     httpServletRequest.setAttribute("loginUser", adminUser);
                 }
             }

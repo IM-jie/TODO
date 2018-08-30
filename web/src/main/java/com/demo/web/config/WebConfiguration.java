@@ -2,6 +2,7 @@ package com.demo.web.config;
 
 
 import com.demo.web.interceptor.AppInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -15,12 +16,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 public class WebConfiguration extends WebMvcConfigurationSupport {
 
+    @Bean
+    public AppInterceptor appInterceptor()
+    {
+        return new AppInterceptor();
+    }
     /**
      * 增加拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AppInterceptor())
+        registry.addInterceptor(appInterceptor())
                 //这里可以添加多个拦截器
                 .addPathPatterns("/**")
                 .excludePathPatterns("/todo/login");

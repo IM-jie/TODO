@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 
 @RestController
-@RequestMapping("/todo/task")
+@RequestMapping("/mytodo/task")
 public class TaskController {
 
     private Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
@@ -30,7 +30,7 @@ public class TaskController {
     /**
      * @apiDescription 任务获取接口
      * Author: huangjie
-     * @api {get} /todo/task/{taskid} 任务获取接口
+     * @api {get} /mytodo/task/{taskid} 任务获取接口
      * @apiName getRoleMessage
      * @apiGroup adminroles
      * @apiVersion 0.0.1
