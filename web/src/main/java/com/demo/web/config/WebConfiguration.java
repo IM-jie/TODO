@@ -21,6 +21,8 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
     {
         return new AppInterceptor();
     }
+
+
     /**
      * 增加拦截器
      */

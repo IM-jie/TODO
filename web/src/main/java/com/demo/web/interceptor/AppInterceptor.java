@@ -7,6 +7,7 @@ import com.demo.utils.PasswordCryptoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import redis.clients.jedis.Jedis;
@@ -22,9 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author: zouweidong
  * @create: 2018-08-22 09:27
  **/
+@Component
 public class AppInterceptor implements HandlerInterceptor {
 
-    private Logger LOGGER = LoggerFactory.getLogger(AppInterceptor.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(AppInterceptor.class);
 
     @Autowired
     private JedisPool jedisPool;
