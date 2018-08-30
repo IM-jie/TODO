@@ -46,12 +46,13 @@ public class AppInterceptor implements HandlerInterceptor {
 //            return false;
             AdminUser loginUser = new AdminUser();
             loginUser.setUsername("admin");
-            loginUser.setUserId("123456");
+            loginUser.setUserId("12345678");
             loginUser.setPermissionId(0);
-
-            Cookie cookie = new Cookie("Info_side", loginUser);
+            String string=PasswordCryptoUtil.encode("userinfo:admin");
+            Cookie cookie = new Cookie("Info_side", string);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);
+            httpServletRequest.setAttribute("loginUser", loginUser);
             return true;
         } else {
             for (Cookie cookie : cookies) {
@@ -61,8 +62,6 @@ public class AppInterceptor implements HandlerInterceptor {
                     Jedis redis = jedisPool.getResource();
                     String user = redis.get(str);
                     AdminUser adminUser=JSONObject.parseObject(user,AdminUser.class);
-//                    AdminUser adminUser=new AdminUser();
-//                    adminUser.setUsername("黄杰");
                     httpServletRequest.setAttribute("loginUser", adminUser);
                 }
             }
