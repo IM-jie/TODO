@@ -47,6 +47,7 @@ public class AppInterceptor implements HandlerInterceptor {
             Cookie cookie = new Cookie("Info_side", "黄杰");
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);
+            return false;
         } else {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CommonConstants.COOKIE_KEY)) {
@@ -60,8 +61,8 @@ public class AppInterceptor implements HandlerInterceptor {
                     httpServletRequest.setAttribute("loginUser", adminUser);
                 }
             }
+            return true;
         }
-        return true;
 //        //用户已登录
 //        if (redis.get("loginUser") != null) {
 //            httpServletRequest.setAttribute("loginUser",redis.get("loginUser"));
