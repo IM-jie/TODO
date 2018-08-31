@@ -40,7 +40,7 @@ public interface IAdminUserSV {
      * @param id
      * @return
      */
-    int deleteAdminUser(Integer id);
+    int deleteAdminUser(AdminUser loginUser,Integer id);
 
     /**
      * 添加用户
@@ -52,4 +52,6 @@ public interface IAdminUserSV {
 
     boolean isExistUsername(String username);
     boolean isExistMail(String mail);
+
+    int updatePassword(Integer id,String password);
 }

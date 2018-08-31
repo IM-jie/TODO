@@ -5,6 +5,7 @@ import com.demo.entity.AdminUser;
 import com.demo.entity.common.Result;
 import com.demo.entity.param.AdminUserAddParam;
 import com.demo.service.iservice.IAdminUserSV;
+import com.demo.utils.RandomStringUtil;
 import com.demo.utils.common.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +54,8 @@ public class AdminUserController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public Result deleteAdminUser(@PathVariable(name = "id") Integer id) {
-        if (iAdminUserSV.deleteAdminUser(id) != 0) {
+    public Result deleteAdminUser(@RequestAttribute(name = "loginUser") AdminUser loginUser, @PathVariable(name = "id") Integer id) {
+        if (iAdminUserSV.deleteAdminUser(loginUser,id) != 0) {
             return ResultUtil.success(1003, "删除用户成功");
         } else {
             return ResultUtil.error(1004, "删除用户失败");
@@ -65,8 +66,8 @@ public class AdminUserController {
     public Result addAdminUser(@RequestAttribute(name = "loginUser") AdminUser loginUser, @RequestBody @Valid AdminUserAddParam adminUserAddParam) {
         String username = adminUserAddParam.getUsername();
         String mail = adminUserAddParam.getMail();
-        logger.info("添加用户"+adminUserAddParam.getUsername());
-        if (!iAdminUserSV.isExistUsername(username)&&!iAdminUserSV.isExistMail(mail)) {
+        logger.info("添加用户" + adminUserAddParam.getUsername());
+        if (!iAdminUserSV.isExistUsername(username) && !iAdminUserSV.isExistMail(mail)) {
             if (iAdminUserSV.addAdminUser(adminUserAddParam, loginUser) != 0) {
                 return ResultUtil.success(1001, "添加用户成功");
             } else {
@@ -74,6 +75,16 @@ public class AdminUserController {
             }
         } else {
             return ResultUtil.error(1003, "用户名或邮箱已存在");
+        }
+    }
+
+    @PostMapping(value = "/{id}")
+    public Result updatePassword(@PathVariable(name = "id") Integer id) {
+        String password = RandomStringUtil.getRandomString(8);
+        if (0 != iAdminUserSV.updatePassword(id, password)) {
+            return ResultUtil.success(password);
+        } else {
+            return ResultUtil.error(1004,"重置密码失败");
         }
     }
 }
