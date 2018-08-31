@@ -42,8 +42,10 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      */
     @Override
     public boolean createTask(TaskInfo taskInfo) throws GeneralException{
-
-
+        int result = taskInfoMapper.insert(taskInfo);
+        if (result == 1){
+            return true;
+        }
         return false;
     }
 

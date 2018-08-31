@@ -50,7 +50,7 @@ public class LoginController {
                 String userJson = JSON.toJSONString(adminUser);
                 Jedis redis = jedisPool.getResource();
                 String userKey = CacheConstants.USER_INFO_KEY+adminUser.getUsername();
-                redis.setex(userKey, 60 * 30, userJson);
+                redis.setex(userKey, 60 * 30 * 60, userJson);
                 Cookie cookie=new Cookie(CommonConstants.COOKIE_KEY,PasswordCryptoUtil.encode(userKey));
                 cookie.setPath("/");
                 cookie.setMaxAge(60*30);

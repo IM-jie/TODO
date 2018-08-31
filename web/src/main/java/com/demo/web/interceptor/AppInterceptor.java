@@ -44,6 +44,7 @@ public class AppInterceptor implements HandlerInterceptor {
 //            httpServletResponse.setContentType("application/json; charset=utf-8");
 //            httpServletResponse.getWriter().write(result.toString());
 //            return false;
+            LOGGER.info("上面");
             AdminUser loginUser = new AdminUser();
             loginUser.setUsername("admin");
             loginUser.setUserId("12345678");
@@ -56,6 +57,7 @@ public class AppInterceptor implements HandlerInterceptor {
             httpServletRequest.setAttribute("loginUser", loginUser);
             return true;
         } else {
+            LOGGER.info("下面");
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CommonConstants.COOKIE_KEY)) {
                     String str = PasswordCryptoUtil.decode(cookie.getValue());
