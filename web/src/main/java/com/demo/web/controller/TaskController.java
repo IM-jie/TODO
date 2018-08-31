@@ -4,12 +4,15 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.demo.entity.AdminUser;
 import com.demo.entity.TaskInfo;
 import com.demo.entity.common.Result;
+import com.demo.entity.enumerate.TaskStatusEnum;
 import com.demo.entity.param.TaskAddParam;
 import com.demo.service.iservice.ITaskInfoSV;
+import com.demo.utils.NumberComponent;
 import com.demo.utils.common.EmptyUtil;
 import com.demo.utils.common.GeneralException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +34,9 @@ public class TaskController {
 
     @Reference
     private ITaskInfoSV iTaskInfoSV;
+
+    @Autowired
+    private NumberComponent numberComponent;
 
     /**
      * @apiDescription 任务获取接口
@@ -109,11 +115,13 @@ public class TaskController {
     @PostMapping("")
     public Result createTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestBody @Valid TaskAddParam taskAddParam) throws GeneralException {
         try {
+            LOGGER.info("adminUser-->"+adminUser.toString());
             LOGGER.info("taskAddParam-->"+taskAddParam.toString());
             if (taskAddParam.getPrivateStatus() == 1 && !taskAddParam.getWorkerId().equals(adminUser.getUserId())) {
                 return new Result(1, "私有TODO不能添加给别人");
             }
             TaskInfo taskInfo = new TaskInfo();
+            taskInfo.setTaskId(numberComponent.getGuid());
             taskInfo.setCreator(adminUser.getUsername());
             taskInfo.setCreatorId(adminUser.getUserId());
             taskInfo.setContent(taskAddParam.getContent());
@@ -124,15 +132,16 @@ public class TaskController {
             taskInfo.setCreateTime(new Date());
             taskInfo.setPrivateStatus(taskAddParam.getPrivateStatus());
             taskInfo.setMarkStatus(taskAddParam.getMarkStatus());
+            taskInfo.setStatus(TaskStatusEnum.STATUS_ON.getCode());
             LOGGER.info("taskinfo-->"+taskInfo,toString());
             if (!iTaskInfoSV.createTask(taskInfo)) {
                 LOGGER.info("任务创建失败");
                 return new Result(1, "任务创建失败");
             }
             //创建任务给别人
-            if (!taskAddParam.getWorkerId().equals(adminUser.getUserId())) {
-                //添加我的关注
-            }
+//            if (!taskAddParam.getWorkerId().equals(adminUser.getUserId())) {
+//                //添加我的关注
+//            }
 
             return new Result(0, "创建成功");
         } catch (Exception e) {

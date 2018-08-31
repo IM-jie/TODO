@@ -1,6 +1,7 @@
 package com.demo.entity.param;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,8 +20,10 @@ public class TaskAddParam implements Serializable {
     @NotEmpty(message = "负责人不能为空")
     private String worker;
 
+    @NotNull(message = "是否私有不能为空")
     private Integer privateStatus;
 
+    @NotNull(message = "是否星标不能为空")
     private Integer markStatus;
 
     private Date startTime;
