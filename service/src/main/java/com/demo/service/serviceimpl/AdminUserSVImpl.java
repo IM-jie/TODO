@@ -8,6 +8,7 @@ import com.demo.entity.AdminUser;
 import com.demo.entity.TaskRecord;
 import com.demo.entity.TaskUser;
 import com.demo.entity.param.AdminUserAddParam;
+import com.demo.entity.param.AdminUserUpdateParam;
 import com.demo.service.iservice.IAdminUserSV;
 import com.demo.service.iservice.ISendMailSV;
 import com.demo.utils.NumberComponent;
@@ -68,7 +69,7 @@ public class AdminUserSVImpl implements IAdminUserSV {
     }
 
     @Override
-    public int deleteAdminUser(AdminUser loginUser,Integer id) {
+    public int deleteAdminUser(AdminUser loginUser, Integer id) {
         Map<String, Object> params = new HashMap<>();
         params.put("eqId", id);
         params.put("status", 0);
@@ -80,7 +81,7 @@ public class AdminUserSVImpl implements IAdminUserSV {
         taskRecord.setOperateType(0);
         taskRecord.setTaskId(loginUser.getUserId());
         taskRecord.setOperator(loginUser.getUsername());
-        taskRecord.setOperate("关闭了账号【"+adminUserMapper.selectByPrimaryKey(id).getUsername()+"】");
+        taskRecord.setOperate("关闭了账号【" + adminUserMapper.selectByPrimaryKey(id).getUsername() + "】");
         taskRecord.setOperateTime(new Date(System.currentTimeMillis()));
         taskRecord.setStatus(1);
         return taskRecordMapper.insert(taskRecord);
@@ -115,14 +116,60 @@ public class AdminUserSVImpl implements IAdminUserSV {
     }
 
     @Override
-    public int updatePassword(Integer id, String password) {
+    public int resetPassword(Integer id, String password) {
         AdminUser adminUser = adminUserMapper.selectByPrimaryKey(id);
-        String encodePassword = PasswordCryptoUtil.encode(password+adminUser.getSalt());
+        String encodePassword = PasswordCryptoUtil.encode(password + adminUser.getSalt());
         adminUser.setPassword(encodePassword);
         String mail = adminUser.getMail();
         String subject = "TeamToy密码重置结果";
-        String content = "您的新密码为："+password;
-        iSendMailSV.sendSimpleMail(mail,subject,content);
+        String content = "您的新密码为：" + password;
+        iSendMailSV.sendSimpleMail(mail, subject, content);
+        return adminUserMapper.updateByPrimaryKeySelective(adminUser);
+    }
+
+    @Override
+    public int updatePassword(Integer id, String password, String newPassword) {
+        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(id);
+        if (!PasswordCryptoUtil.encode(password + adminUser.getSalt()).equals(adminUser.getPassword())) {
+            return -1;
+        } else {
+            adminUser.setPassword(PasswordCryptoUtil.encode(newPassword + adminUser.getSalt()));
+            return adminUserMapper.updateByPrimaryKeySelective(adminUser);
+        }
+    }
+
+    @Override
+    public int updatePermission(Integer id, Integer permission, AdminUser loginUser) {
+        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(id);
+        adminUser.setPermissionId(permission);
+        adminUserMapper.updateByPrimaryKeySelective(adminUser);
+        //添加更改用户权限操作记录
+        TaskRecord taskRecord = new TaskRecord();
+        String recordId = numberComponent.getGuid();
+        taskRecord.setRecordId(recordId);
+        taskRecord.setOperateType(0);
+        taskRecord.setTaskId(adminUser.getUserId());
+        taskRecord.setOperator(loginUser.getUsername());
+        if (permission == 0) {
+            taskRecord.setOperate("将账号【" + adminUser.getUsername() + "】的等级调整为超级管理员");
+
+        } else {
+            taskRecord.setOperate("将账号【" + adminUser.getUsername() + "】的等级调整为普通成员");
+        }
+        taskRecord.setOperateTime(new Date(System.currentTimeMillis()));
+        taskRecord.setStatus(1);
+        return taskRecordMapper.insert(taskRecord);
+    }
+
+    @Override
+    public int updateAdminUser(Integer id, AdminUserUpdateParam adminUserUpdateParam) {
+        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(id);
+        adminUser.setMail(adminUserUpdateParam.getMail());
+        adminUser.setPhone(adminUserUpdateParam.getPhone());
+        adminUser.setPhoneCopy(adminUserUpdateParam.getPhoneCopy());
+        adminUser.setBlogName(adminUserUpdateParam.getBlogName());
+        adminUser.setEmpNo(adminUserUpdateParam.getEmpNo());
+        adminUser.setRemark(adminUserUpdateParam.getRemark());
         return adminUserMapper.updateByPrimaryKeySelective(adminUser);
     }
 
@@ -139,8 +186,7 @@ public class AdminUserSVImpl implements IAdminUserSV {
     }
 
     @Override
-    public boolean isExistMail(String mail)
-    {
+    public boolean isExistMail(String mail) {
         Map<String, Object> params = new HashMap<>();
         params.put("eqMail", mail);
         params.put("neqStatus", 0);

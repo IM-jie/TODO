@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.demo.entity.AdminUser;
 import com.demo.entity.common.Result;
 import com.demo.entity.param.AdminUserAddParam;
+import com.demo.entity.param.AdminUserUpdateParam;
 import com.demo.service.iservice.IAdminUserSV;
 import com.demo.utils.RandomStringUtil;
 import com.demo.utils.common.ResultUtil;
@@ -55,7 +56,7 @@ public class AdminUserController {
 
     @DeleteMapping(value = "/{id}")
     public Result deleteAdminUser(@RequestAttribute(name = "loginUser") AdminUser loginUser, @PathVariable(name = "id") Integer id) {
-        if (iAdminUserSV.deleteAdminUser(loginUser,id) != 0) {
+        if (iAdminUserSV.deleteAdminUser(loginUser, id) != 0) {
             return ResultUtil.success(1003, "删除用户成功");
         } else {
             return ResultUtil.error(1004, "删除用户失败");
@@ -78,13 +79,45 @@ public class AdminUserController {
         }
     }
 
-    @PostMapping(value = "/{id}")
-    public Result updatePassword(@PathVariable(name = "id") Integer id) {
+    @PutMapping(value = "/resetPassword/{id}")
+    public Result resetPassword(@PathVariable(name = "id") Integer id) {
         String password = RandomStringUtil.getRandomString(8);
-        if (0 != iAdminUserSV.updatePassword(id, password)) {
+        if (0 != iAdminUserSV.resetPassword(id, password)) {
             return ResultUtil.success(password);
         } else {
-            return ResultUtil.error(1004,"重置密码失败");
+            return ResultUtil.error(1004, "重置密码失败");
+        }
+    }
+
+    @PutMapping(value = "/updatePermission/{id}")
+    public Result updatePermission(@PathVariable(name = "id") Integer id, @RequestParam(name = "permissionId") Integer permissionId, @RequestAttribute(name = "loginUser") AdminUser loginUser) {
+        if (0 != iAdminUserSV.updatePermission(id, permissionId, loginUser)) {
+            return ResultUtil.success(1005, "更改权限成功");
+        } else {
+            return ResultUtil.error(1006, "更改权限失败");
+        }
+    }
+
+    @PutMapping(value = "/updatePassword/{id}")
+    public Result updatePassword(@PathVariable(name = "id") Integer id, @RequestParam(name = "password") String password, @RequestParam(name = "newPassword") String newPassword) {
+        if (-1 == iAdminUserSV.updatePassword(id, password, newPassword)) {
+            return ResultUtil.success(1007, "密码错误");
+        } else {
+            if (0 != iAdminUserSV.updatePassword(id, password, newPassword)) {
+                return ResultUtil.success(1008, "密码更新成功");
+
+            } else {
+                return ResultUtil.error(1009, "密码更新失败");
+            }
+        }
+    }
+
+    @PutMapping(value = "/{id}")
+    public Result updateAdminUser(@PathVariable(name = "id") Integer id, @RequestBody @Valid AdminUserUpdateParam adminUserUpdateParam) {
+        if (0 != iAdminUserSV.updateAdminUser(id, adminUserUpdateParam)) {
+            return ResultUtil.success(1010,"用户资料更新成功");
+        } else {
+            return ResultUtil.error(1011,"用户更新失败");
         }
     }
 }

@@ -2,6 +2,7 @@ package com.demo.service.iservice;
 
 import com.demo.entity.AdminUser;
 import com.demo.entity.param.AdminUserAddParam;
+import com.demo.entity.param.AdminUserUpdateParam;
 
 import java.util.List;
 
@@ -53,5 +54,29 @@ public interface IAdminUserSV {
     boolean isExistUsername(String username);
     boolean isExistMail(String mail);
 
-    int updatePassword(Integer id,String password);
+    /**
+     * 重置密码
+     * @param id
+     * @param password
+     * @return
+     */
+    int resetPassword(Integer id,String password);
+
+    int updatePassword(Integer id,String password,String newPassword);
+    /**
+     * 更改用户权限
+     * @param id
+     * @param permission
+     * @param loginuser
+     * @return
+     */
+    int updatePermission(Integer id,Integer permission,AdminUser loginuser);
+
+    /**
+     * 更新用户资料
+     * @param id
+     * @param adminUserUpdateParam
+     * @return
+     */
+    int updateAdminUser(Integer id, AdminUserUpdateParam adminUserUpdateParam);
 }
