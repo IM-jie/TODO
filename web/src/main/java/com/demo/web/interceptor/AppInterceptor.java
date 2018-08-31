@@ -47,10 +47,10 @@ public class AppInterceptor implements HandlerInterceptor {
             LOGGER.info("上面");
             AdminUser loginUser = new AdminUser();
             loginUser.setId(12);
-            loginUser.setUsername("张二晨");
-            loginUser.setUserId("201835622068033101");
+            loginUser.setUsername("admin");
+            loginUser.setUserId("12345678");
             loginUser.setPermissionId(0);
-            String string=PasswordCryptoUtil.encode("userinfo:张二晨");
+            String string=PasswordCryptoUtil.encode("userinfo:admin");
             Cookie cookie = new Cookie(CommonConstants.COOKIE_KEY, string);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);

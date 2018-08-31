@@ -72,7 +72,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
                 taskRecord.setOperateType(RecordTypeEnum.TASK_CREATE.getCode());
                 taskRecord.setOperate("添加了TODO【" + taskInfo.getContent() + "】");
             }
-            taskRecord.setOperator(taskInfo.getCreatorId());
+            taskRecord.setOperator(taskInfo.getCreator());
             taskRecord.setStatus(RecordTypeEnum.RECORD_ENABLE.getCode());
             if (this.insertTaskRecord(taskRecord)) {
                 if (!taskInfo.getCreatorId().equals(taskInfo.getWorkerId())) {
