@@ -2,11 +2,14 @@ package com.demo.service.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.demo.dao.AdminUserMapper;
+import com.demo.dao.TaskRecordMapper;
 import com.demo.dao.TaskUserMapper;
 import com.demo.entity.AdminUser;
+import com.demo.entity.TaskRecord;
 import com.demo.entity.TaskUser;
 import com.demo.entity.param.AdminUserAddParam;
 import com.demo.service.iservice.IAdminUserSV;
+import com.demo.service.iservice.ISendMailSV;
 import com.demo.utils.NumberComponent;
 import com.demo.utils.PasswordCryptoUtil;
 import com.demo.utils.RandomStringUtil;
@@ -34,7 +37,13 @@ public class AdminUserSVImpl implements IAdminUserSV {
     private TaskUserMapper taskUserMapper;
 
     @Autowired
-    NumberComponent numberComponent;
+    private TaskRecordMapper taskRecordMapper;
+
+    @Autowired
+    private NumberComponent numberComponent;
+
+    @Autowired
+    private ISendMailSV iSendMailSV;
 
     @Override
     public List<AdminUser> listAdminUser() {
@@ -59,11 +68,22 @@ public class AdminUserSVImpl implements IAdminUserSV {
     }
 
     @Override
-    public int deleteAdminUser(Integer id) {
+    public int deleteAdminUser(AdminUser loginUser,Integer id) {
         Map<String, Object> params = new HashMap<>();
         params.put("eqId", id);
         params.put("status", 0);
-        return adminUserMapper.updateByMap(params);
+        adminUserMapper.updateByMap(params);
+        //添加操作记录
+        TaskRecord taskRecord = new TaskRecord();
+        String recordId = numberComponent.getGuid();
+        taskRecord.setRecordId(recordId);
+        taskRecord.setOperateType(0);
+        taskRecord.setTaskId(loginUser.getUserId());
+        taskRecord.setOperator(loginUser.getUsername());
+        taskRecord.setOperate("关闭了账号【"+adminUserMapper.selectByPrimaryKey(id).getUsername()+"】");
+        taskRecord.setOperateTime(new Date(System.currentTimeMillis()));
+        taskRecord.setStatus(1);
+        return taskRecordMapper.insert(taskRecord);
     }
 
     @Override
@@ -80,7 +100,30 @@ public class AdminUserSVImpl implements IAdminUserSV {
         adminUser.setStatus(1);
         adminUser.setCreateTime(new Date(System.currentTimeMillis()));
         adminUser.setCreator(loginUser.getUsername());
-        return adminUserMapper.insert(adminUser);
+        adminUserMapper.insert(adminUser);
+        //添加操作记录
+        TaskRecord taskRecord = new TaskRecord();
+        String recordId = numberComponent.getGuid();
+        taskRecord.setRecordId(recordId);
+        taskRecord.setOperateType(0);
+        taskRecord.setTaskId(loginUser.getUserId());
+        taskRecord.setOperator(adminUserAddParam.getUsername());
+        taskRecord.setOperate("加入了TeamToy");
+        taskRecord.setOperateTime(new Date(System.currentTimeMillis()));
+        taskRecord.setStatus(1);
+        return taskRecordMapper.insert(taskRecord);
+    }
+
+    @Override
+    public int updatePassword(Integer id, String password) {
+        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(id);
+        String encodePassword = PasswordCryptoUtil.encode(password+adminUser.getSalt());
+        adminUser.setPassword(encodePassword);
+        String mail = adminUser.getMail();
+        String subject = "TeamToy密码重置结果";
+        String content = "您的新密码为："+password;
+        iSendMailSV.sendSimpleMail(mail,subject,content);
+        return adminUserMapper.updateByPrimaryKeySelective(adminUser);
     }
 
     @Override

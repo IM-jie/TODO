@@ -10,9 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @author mac
  */
 @SpringBootApplication
-@EnableAutoConfiguration
 @MapperScan("com.demo.dao")
-@ComponentScan(basePackages = {"com.demo.utils"})
+@ComponentScan(basePackages = {"com.demo.utils","com.demo.service"})
 public class ServiceApplication {
 
 	public static void main(String[] args) {
