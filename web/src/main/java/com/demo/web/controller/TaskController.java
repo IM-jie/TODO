@@ -115,6 +115,7 @@ public class TaskController {
     @PostMapping("")
     public Result createTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestBody @Valid TaskAddParam taskAddParam) throws GeneralException {
         try {
+            LOGGER.info("adminUser-->"+adminUser.toString());
             LOGGER.info("taskAddParam-->"+taskAddParam.toString());
             if (taskAddParam.getPrivateStatus() == 1 && !taskAddParam.getWorkerId().equals(adminUser.getUserId())) {
                 return new Result(1, "私有TODO不能添加给别人");
