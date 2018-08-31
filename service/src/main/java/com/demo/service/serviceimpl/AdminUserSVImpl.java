@@ -79,8 +79,9 @@ public class AdminUserSVImpl implements IAdminUserSV {
         String recordId = numberComponent.getGuid();
         taskRecord.setRecordId(recordId);
         taskRecord.setOperateType(0);
-        taskRecord.setTaskId(loginUser.getUserId());
+        taskRecord.setTaskId(adminUserMapper.selectByPrimaryKey(id).getUserId());
         taskRecord.setOperator(loginUser.getUsername());
+        taskRecord.setOperatorId(loginUser.getUserId());
         taskRecord.setOperate("关闭了账号【" + adminUserMapper.selectByPrimaryKey(id).getUsername() + "】");
         taskRecord.setOperateTime(new Date(System.currentTimeMillis()));
         taskRecord.setStatus(1);
@@ -109,6 +110,7 @@ public class AdminUserSVImpl implements IAdminUserSV {
         taskRecord.setOperateType(0);
         taskRecord.setTaskId(loginUser.getUserId());
         taskRecord.setOperator(adminUserAddParam.getUsername());
+        taskRecord.setOperatorId(userId);
         taskRecord.setOperate("加入了TeamToy");
         taskRecord.setOperateTime(new Date(System.currentTimeMillis()));
         taskRecord.setStatus(1);
@@ -150,6 +152,7 @@ public class AdminUserSVImpl implements IAdminUserSV {
         taskRecord.setOperateType(0);
         taskRecord.setTaskId(adminUser.getUserId());
         taskRecord.setOperator(loginUser.getUsername());
+        taskRecord.setOperatorId(loginUser.getUserId());
         if (permission == 0) {
             taskRecord.setOperate("将账号【" + adminUser.getUsername() + "】的等级调整为超级管理员");
 
