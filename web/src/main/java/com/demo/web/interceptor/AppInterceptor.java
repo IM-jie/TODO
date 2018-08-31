@@ -49,7 +49,7 @@ public class AppInterceptor implements HandlerInterceptor {
             loginUser.setUserId("12345678");
             loginUser.setPermissionId(0);
             String string=PasswordCryptoUtil.encode("userinfo:admin");
-            Cookie cookie = new Cookie("Info_side", string);
+            Cookie cookie = new Cookie(CommonConstants.COOKIE_KEY, string);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);
             httpServletResponse.addCookie(cookie);

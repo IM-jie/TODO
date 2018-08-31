@@ -41,7 +41,9 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description: 创建任务
      */
     @Override
-    public boolean createTask(TaskInfo taskInfo) {
+    public boolean createTask(TaskInfo taskInfo) throws GeneralException{
+
+
         return false;
     }
 
