@@ -19,7 +19,28 @@ public enum  TaskStatusEnum {
     /**
      * 任务已完成
      */
-    STATUS_FINISHED(2, "任务已完成");
+    STATUS_FINISHED(2, "任务已完成"),
+
+    /**
+     * 非星标任务
+     */
+    MARK_FALSE(0,"非星标任务"),
+
+    /**
+     * 星标任务
+     */
+    MARK_TRUE(1,"星标任务"),
+
+    /**
+     * 非私密任务
+     */
+    PRIVATE_FALSE(0,"非私密任务"),
+
+    /**
+     * 私密任务
+     */
+    PRIVATE_TRUE(1,"私密任务");
+
 
     private Integer code;
     private String msg;
