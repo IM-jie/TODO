@@ -2,11 +2,18 @@ package com.demo.service.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.demo.dao.TaskInfoMapper;
+import com.demo.dao.TaskRecordMapper;
+import com.demo.dao.TaskUserMapper;
 import com.demo.entity.TaskInfo;
+import com.demo.entity.TaskRecord;
+import com.demo.entity.TaskUser;
+import com.demo.entity.enumerate.RecordTypeEnum;
 import com.demo.service.iservice.ITaskInfoSV;
+import com.demo.utils.NumberComponent;
 import com.demo.utils.common.GeneralException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,15 +30,24 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
     @Autowired
     private TaskInfoMapper taskInfoMapper;
 
+    @Autowired
+    private TaskRecordMapper taskRecordMapper;
+
+    @Autowired
+    private NumberComponent numberComponent;
+
+    @Autowired
+    private TaskUserMapper taskUserMapper;
+
     /**
      * @param taskId
      * @return
      * @description；获取任务详细信息
      */
     @Override
-    public TaskInfo getOneTaskInfo(String taskId) throws GeneralException{
-        Map<String, Object> param=new HashMap<>();
-        param.put("eqTaskid",taskId);
+    public TaskInfo getOneTaskInfo(String taskId) throws GeneralException {
+        Map<String, Object> param = new HashMap<>();
+        param.put("eqTaskid", taskId);
         return taskInfoMapper.selectByMap(param);
     }
 
@@ -41,10 +57,36 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description: 创建任务
      */
     @Override
-    public boolean createTask(TaskInfo taskInfo) throws GeneralException{
+    public boolean createTask(TaskInfo taskInfo) throws GeneralException {
         int result = taskInfoMapper.insert(taskInfo);
-        if (result == 1){
-            return true;
+        if (result == 1) {
+            //添加操作记录
+            TaskRecord taskRecord = new TaskRecord();
+            taskRecord.setRecordId(numberComponent.getGuid());
+            taskRecord.setTaskId(taskInfo.getTaskId());
+            taskRecord.setOperateTime(new Date());
+            if (!taskInfo.getCreatorId().equals(taskInfo.getWorkerId())) {
+                taskRecord.setOperateType(RecordTypeEnum.TASK_TRANSER.getCode());
+                taskRecord.setOperate("将TODO【" + taskInfo.getContent() + "】转让给了" + taskInfo.getWorker());
+            } else {
+                taskRecord.setOperateType(RecordTypeEnum.TASK_CREATE.getCode());
+                taskRecord.setOperate("添加了TODO【" + taskInfo.getContent() + "】");
+            }
+            taskRecord.setOperator(taskInfo.getCreatorId());
+            taskRecord.setStatus(RecordTypeEnum.RECORD_ENABLE.getCode());
+            if (this.insertTaskRecord(taskRecord)) {
+                if (!taskInfo.getCreatorId().equals(taskInfo.getWorkerId())) {
+                    TaskUser taskUser = new TaskUser();
+                    taskUser.setTaskId(taskInfo.getTaskId());
+                    taskUser.setFollowTime(new Date());
+                    taskUser.setUserId(taskInfo.getCreatorId());
+                    if(!this.payAttentionTask(taskUser)){
+                        throw new GeneralException("1","添加关注失败");
+                    }
+                }
+                return true;
+            }
+            throw new GeneralException("1","添加操作记录失败");
         }
         return false;
     }
@@ -116,6 +158,33 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      */
     @Override
     public boolean deleteAllTask() {
+        return false;
+    }
+
+    /**
+     * 添加操作记录
+     *
+     * @param taskRecord
+     * @return
+     */
+    private boolean insertTaskRecord(TaskRecord taskRecord) {
+        int result = taskRecordMapper.insert(taskRecord);
+        if (result == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 添加关注
+     * @param taskUser
+     * @return
+     */
+    private boolean payAttentionTask(TaskUser taskUser) {
+        int result = taskUserMapper.insert(taskUser);
+        if (result == 1){
+            return true;
+        }
         return false;
     }
 }
