@@ -115,8 +115,8 @@ public class TaskController {
     @PostMapping("")
     public Result createTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestBody @Valid TaskAddParam taskAddParam) throws GeneralException {
         try {
-            LOGGER.info("adminUser-->"+adminUser.toString());
-            LOGGER.info("taskAddParam-->"+taskAddParam.toString());
+            LOGGER.info("adminUser-->" + adminUser.toString());
+            LOGGER.info("taskAddParam-->" + taskAddParam.toString());
             if (taskAddParam.getPrivateStatus() == 1 && !taskAddParam.getWorkerId().equals(adminUser.getUserId())) {
                 return new Result(1, "私有TODO不能添加给别人");
             }
@@ -133,7 +133,7 @@ public class TaskController {
             taskInfo.setPrivateStatus(taskAddParam.getPrivateStatus());
             taskInfo.setMarkStatus(taskAddParam.getMarkStatus());
             taskInfo.setStatus(TaskStatusEnum.STATUS_ON.getCode());
-            LOGGER.info("taskinfo-->"+taskInfo,toString());
+            LOGGER.info("taskinfo-->" + taskInfo, toString());
             if (!iTaskInfoSV.createTask(taskInfo)) {
                 LOGGER.info("任务创建失败");
                 return new Result(1, "任务创建失败");
@@ -153,5 +153,19 @@ public class TaskController {
         }
     }
 
-
+    @GetMapping("/followTask/taskid")
+    public Result followTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @PathVariable(name = "taskid") String taskid) throws GeneralException {
+        try{
+            if (iTaskInfoSV.followTask(taskid,adminUser.getUserId())){
+                return new Result(1,"成功");
+            }
+            return new Result(0,"失败");
+        }catch (Exception e){
+            LOGGER.info("异常" + e);
+            if (e instanceof GeneralException) {
+                return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
+            }
+            throw new GeneralException("系统错误");
+        }
+    }
 }

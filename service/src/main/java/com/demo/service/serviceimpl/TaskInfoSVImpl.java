@@ -1,20 +1,25 @@
 package com.demo.service.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.demo.dao.AdminUserMapper;
 import com.demo.dao.TaskInfoMapper;
 import com.demo.dao.TaskRecordMapper;
 import com.demo.dao.TaskUserMapper;
+import com.demo.entity.AdminUser;
 import com.demo.entity.TaskInfo;
 import com.demo.entity.TaskRecord;
 import com.demo.entity.TaskUser;
 import com.demo.entity.enumerate.RecordTypeEnum;
+import com.demo.service.iservice.IAdminUserSV;
 import com.demo.service.iservice.ITaskInfoSV;
 import com.demo.utils.NumberComponent;
+import com.demo.utils.common.EmptyUtil;
 import com.demo.utils.common.GeneralException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +43,9 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
 
     @Autowired
     private TaskUserMapper taskUserMapper;
+
+    @Autowired
+    private AdminUserMapper adminUserMapper;
 
     /**
      * @param taskId
@@ -81,13 +89,13 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
                     taskUser.setTaskId(taskInfo.getTaskId());
                     taskUser.setFollowTime(new Date());
                     taskUser.setUserId(taskInfo.getCreatorId());
-                    if(!this.payAttentionTask(taskUser)){
-                        throw new GeneralException("1","添加关注失败");
+                    if (!this.payAttentionTask(taskUser)) {
+                        throw new GeneralException("1", "添加关注失败");
                     }
                 }
                 return true;
             }
-            throw new GeneralException("1","添加操作记录失败");
+            throw new GeneralException("1", "添加操作记录失败");
         }
         return false;
     }
@@ -98,7 +106,40 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description: 完成任务或者撤销完成任务
      */
     @Override
-    public boolean finishTask(String taskId) {
+    public boolean finishTask(String taskId) throws GeneralException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqTaskid", taskId);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(params);
+        if (EmptyUtil.isNotEmpty(taskInfo)) {
+            throw new GeneralException("1", "任务不存在");
+        }
+        if (EmptyUtil.isNotEmpty(taskInfo.getWorker())){
+            taskInfo.setFinisher(null);
+            taskInfo.setFinisherId(null);
+            if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
+                return true;
+            }
+            throw new GeneralException("1","撤销完成任务失败");
+        }
+        taskInfo.setFinisher(taskInfo.getWorker());
+        taskInfo.setFinisherId(taskInfo.getWorkerId());
+        if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
+            TaskRecord taskRecord = new TaskRecord();
+            taskRecord.setRecordId(numberComponent.getGuid());
+            taskRecord.setTaskId(taskInfo.getTaskId());
+            taskRecord.setOperateTime(new Date());
+            taskRecord.setOperateType(RecordTypeEnum.TASK_FINISH.getCode());
+            taskRecord.setOperate("完成了TODO【" + taskInfo.getContent() + "】");
+            taskRecord.setOperator(taskInfo.getWorker());
+            taskRecord.setOperatorId(taskInfo.getWorkerId());
+            if (!this.insertTaskRecord(taskRecord)) {
+                throw new GeneralException("1", "添加记录失败");
+            }
+            return true;
+        }
+
+
+
         return false;
     }
 
@@ -109,7 +150,30 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:转让任务
      */
     @Override
-    public boolean transferTask(String taskId, String userId) {
+    public boolean transferTask(String taskId, String userId) throws GeneralException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqTaskid", taskId);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(params);
+        if (EmptyUtil.isNotEmpty(taskInfo)) {
+            throw new GeneralException("1", "任务不存在");
+        }
+        String userName = this.getUserName(userId);
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setRecordId(numberComponent.getGuid());
+        taskRecord.setTaskId(taskInfo.getTaskId());
+        taskRecord.setOperateTime(new Date());
+        taskRecord.setOperateType(RecordTypeEnum.TASK_TRANSER.getCode());
+        taskRecord.setOperate("将TODO【" + taskInfo.getContent() + "】转让给了" + userName);
+        taskRecord.setOperator(taskInfo.getWorker());
+        taskRecord.setOperatorId(taskInfo.getWorkerId());
+        if (!this.insertTaskRecord(taskRecord)) {
+            throw new GeneralException("1", "添加记录失败");
+        }
+        taskInfo.setWorkerId(userId);
+        taskInfo.setWorker(userName);
+        if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
+            return true;
+        }
         return false;
     }
 
@@ -120,8 +184,31 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:关注任务、取消关注任务
      */
     @Override
-    public boolean followTask(String taskId, String userId) {
-        return false;
+    public boolean followTask(String taskId, String userId) throws GeneralException {
+        Map<String, Object> param = new HashMap<>();
+        param.put("eqTaskid", taskId);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
+        if (EmptyUtil.isEmpty(taskInfo)) {
+            throw new GeneralException("0", "任务不存在");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqTaskId", taskId);
+        params.put("eqUserId", userId);
+        TaskUser taskUser = (TaskUser) taskUserMapper.selectByMap(params);
+        if (EmptyUtil.isNotEmpty(taskUser)) {
+            if (taskUserMapper.deleteByPrimaryKey(taskUser.getId()) == 1) {
+                return true;
+            }
+            throw new GeneralException("0", "取消关注失败");
+        }
+        taskUser.setTaskId(taskId);
+        taskUser.setUserId(userId);
+        taskUser.setFollowTime(new Date());
+        taskUserMapper.insert(taskUser);
+        if (taskUserMapper.insert(taskUser) == 1) {
+            return true;
+        }
+        throw new GeneralException("0", "关注失败");
     }
 
     /**
@@ -178,14 +265,25 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
 
     /**
      * 添加关注
+     *
      * @param taskUser
      * @return
      */
     private boolean payAttentionTask(TaskUser taskUser) {
         int result = taskUserMapper.insert(taskUser);
-        if (result == 1){
+        if (result == 1) {
             return true;
         }
         return false;
+    }
+
+    private String getUserName(String id){
+        Map<String, Object> param = new HashMap<>();
+        param.put("eqTaskId", id);
+        AdminUser adminUser = adminUserMapper.selectByMap(param).get(0);
+        if (EmptyUtil.isNotEmpty(adminUser)){
+            return adminUser.getUsername();
+        }
+        return null;
     }
 }
