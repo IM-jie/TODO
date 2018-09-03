@@ -113,8 +113,16 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
         if (EmptyUtil.isNotEmpty(taskInfo)) {
             throw new GeneralException("1", "任务不存在");
         }
-        taskInfo.setWorker(taskInfo.getWorker());
-        taskInfo.setWorkerId(taskInfo.getWorkerId());
+        if (EmptyUtil.isNotEmpty(taskInfo.getWorker())){
+            taskInfo.setFinisher(null);
+            taskInfo.setFinisherId(null);
+            if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
+                return true;
+            }
+            throw new GeneralException("1","撤销完成任务失败");
+        }
+        taskInfo.setFinisher(taskInfo.getWorker());
+        taskInfo.setFinisherId(taskInfo.getWorkerId());
         if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
             TaskRecord taskRecord = new TaskRecord();
             taskRecord.setRecordId(numberComponent.getGuid());
@@ -129,6 +137,9 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
             }
             return true;
         }
+
+
+
         return false;
     }
 
