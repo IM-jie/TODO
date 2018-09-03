@@ -26,7 +26,7 @@ public class MessageController {
     @GetMapping(value = "")
     public PageResult listMessage(@RequestParam(name = "pageNum")Integer pageNum,@RequestParam(name = "pageSize")Integer pageSize,@RequestAttribute(name = "loginUser")AdminUser loginUser)
     {
-        logger.info("分页收件箱信息========pageNum,pageSize"+pageNum+"  "+pageSize);
+        logger.info("分页收件箱信息========pageNum="+pageNum+"----pageSize="+pageSize);
         return iMessageSV.listMessage(pageNum,pageSize,loginUser);
     }
 }
