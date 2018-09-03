@@ -12,6 +12,10 @@
         <result column="status" property="status" jdbcType="TINYINT"/>
         <result column="operator_id" property="operatorId" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap id="ExtResultMap" extends="BaseResultMap" type="com.demo.entity.ext.TaskRecordExt">
+        <collection property="user" ofType="com.demo.entity.AdminUser" javaType="com.demo.entity.AdminUser"
+                    select="com.demo.dao.AdminUserMapper.selectByUserName" column="operator"/>
+    </resultMap>
     <sql id="Base_Column_List">
     id, record_id, task_id, operate_type, operate, operator, operate_time, status, operator_id
   </sql>
@@ -84,6 +88,17 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_task_record
+        <if test="_parameter != null">
+            <include refid="ByMap_Where_Clause"/>
+            <if test="orderByClause != null">
+                order by ${orderByClause}
+            </if>
+        </if>
+    </select>
+    <select id="selectExtByMap" parameterType="java.util.Map" resultMap="ExtResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_task_record

@@ -45,6 +45,13 @@ public interface AdminUserMapper {
     List<AdminUser> selectByMap(Map<String, Object> params);
 
     /**
+     * 通过用户名查询用户信息
+     * @param userName
+     * @return
+     */
+    AdminUser selectByUserName(String userName);
+
+    /**
      * 更新
      * @param record
      * @return
