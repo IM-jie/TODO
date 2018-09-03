@@ -1,6 +1,7 @@
 package com.demo.dao;
 
 import com.demo.entity.TaskRecord;
+import com.demo.entity.ext.TaskRecordExt;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ public interface TaskRecordMapper {
     int insertSelective(TaskRecord record);
 
     TaskRecord selectByPrimaryKey(Integer id);
+
+    List<TaskRecordExt> selectExtByMap(Map<String, Object> params);
 
     List<TaskRecord> selectByMap(Map<String, Object> params);
 
