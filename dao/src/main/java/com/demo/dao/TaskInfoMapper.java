@@ -23,4 +23,6 @@ public interface TaskInfoMapper {
     int updateByPrimaryKey(TaskInfo record);
 
     TaskInfo selectByMap(Map<String, Object> params);
+
+    int updateMany(Map<String, Object> params);
 }

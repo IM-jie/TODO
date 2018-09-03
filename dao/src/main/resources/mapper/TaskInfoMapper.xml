@@ -367,4 +367,19 @@
       worker_id = #{workerId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateMany" parameterType="java.util.Map">
+    update t_task_info
+    <set>
+      <if test="finisher != null" >
+        finisher = #{finisher,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="privateStatus != null" >
+        private_status = #{privateStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where worker_id = #{workerId,jdbcType=VARCHAR}
+  </update>
 </mapper>

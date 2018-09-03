@@ -66,12 +66,12 @@ public interface ITaskInfoSV {
      * @return
      * @description:完成所有未完成任务
      */
-    boolean finishAllTask() throws GeneralException;
+    boolean finishAllTask(String userid) throws GeneralException;
 
     /**
      * @return
      * @description:删除所有完成任务
      */
-    boolean deleteAllTask() throws GeneralException;
+    boolean deleteAllTask(String userid) throws GeneralException;
 
 }
