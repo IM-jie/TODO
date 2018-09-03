@@ -10,6 +10,7 @@ import com.demo.entity.TaskInfo;
 import com.demo.entity.TaskRecord;
 import com.demo.entity.TaskUser;
 import com.demo.entity.enumerate.RecordTypeEnum;
+import com.demo.entity.enumerate.TaskStatusEnum;
 import com.demo.service.iservice.IAdminUserSV;
 import com.demo.service.iservice.ITaskInfoSV;
 import com.demo.utils.NumberComponent;
@@ -113,13 +114,13 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
         if (EmptyUtil.isNotEmpty(taskInfo)) {
             throw new GeneralException("1", "任务不存在");
         }
-        if (EmptyUtil.isNotEmpty(taskInfo.getWorker())){
+        if (EmptyUtil.isNotEmpty(taskInfo.getWorker())) {
             taskInfo.setFinisher(null);
             taskInfo.setFinisherId(null);
             if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
                 return true;
             }
-            throw new GeneralException("1","撤销完成任务失败");
+            throw new GeneralException("1", "撤销完成任务失败");
         }
         taskInfo.setFinisher(taskInfo.getWorker());
         taskInfo.setFinisherId(taskInfo.getWorkerId());
@@ -139,7 +140,6 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
         }
 
 
-
         return false;
     }
 
@@ -157,6 +157,9 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
         if (EmptyUtil.isNotEmpty(taskInfo)) {
             throw new GeneralException("1", "任务不存在");
         }
+        if (taskInfo.getPrivateStatus() == 1) {
+            throw new GeneralException("1", "私有任务禁止转让");
+        }
         String userName = this.getUserName(userId);
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setRecordId(numberComponent.getGuid());
@@ -171,6 +174,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
         }
         taskInfo.setWorkerId(userId);
         taskInfo.setWorker(userName);
+        taskInfo.setMarkStatus(TaskStatusEnum.MARK_FALSE.getCode());
         if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
             return true;
         }
@@ -217,7 +221,21 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:星标任务、取消星标任务
      */
     @Override
-    public boolean statTask(String taskId) {
+    public boolean statTask(String taskId) throws GeneralException {
+        Map<String, Object> param = new HashMap<>();
+        param.put("eqTaskid", taskId);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
+        if (EmptyUtil.isEmpty(taskInfo)) {
+            throw new GeneralException("0", "任务不存在");
+        }
+        if (taskInfo.getMarkStatus().equals(TaskStatusEnum.MARK_FALSE.getCode())) {
+            taskInfo.setMarkStatus(TaskStatusEnum.MARK_TRUE.getCode());
+        } else {
+            taskInfo.setMarkStatus(TaskStatusEnum.MARK_FALSE.getCode());
+        }
+        if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
+            return true;
+        }
         return false;
     }
 
@@ -227,7 +245,21 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:私有任务、 取消私有任务
      */
     @Override
-    public boolean privateTask(String taskId) {
+    public boolean privateTask(String taskId) throws GeneralException {
+        Map<String, Object> param = new HashMap<>();
+        param.put("eqTaskid", taskId);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
+        if (EmptyUtil.isEmpty(taskInfo)) {
+            throw new GeneralException("0", "任务不存在");
+        }
+        if (taskInfo.getMarkStatus().equals(TaskStatusEnum.PRIVATE_FALSE.getCode())) {
+            taskInfo.setMarkStatus(TaskStatusEnum.PRIVATE_TRUE.getCode());
+        } else {
+            taskInfo.setMarkStatus(TaskStatusEnum.PRIVATE_FALSE.getCode());
+        }
+        if (taskInfoMapper.updateByPrimaryKey(taskInfo) == 1) {
+            return true;
+        }
         return false;
     }
 
@@ -236,7 +268,18 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:完成所有未完成任务
      */
     @Override
-    public boolean finishAllTask() {
+    public boolean finishAllTask(String userid) throws GeneralException {
+        String userName = this.getUserName(userid);
+        if (EmptyUtil.isEmpty(userName)) {
+            throw new GeneralException("1", "userId出错");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("finisher", userName);
+        params.put("status", TaskStatusEnum.STATUS_FINISHED.getCode());
+        params.put("workerId", userid);
+        if (taskInfoMapper.updateMany(params) != 0) {
+            return true;
+        }
         return false;
     }
 
@@ -245,7 +288,18 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:删除所有完成任务
      */
     @Override
-    public boolean deleteAllTask() {
+    public boolean deleteAllTask(String userid) throws GeneralException {
+        String userName = this.getUserName(userid);
+        if (EmptyUtil.isEmpty(userName)) {
+            throw new GeneralException("1", "userId出错");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("finisher", userName);
+        params.put("status", TaskStatusEnum.STATUS_DEL.getCode());
+        params.put("workerId", userid);
+        if (taskInfoMapper.updateMany(params) != 0) {
+            return true;
+        }
         return false;
     }
 
@@ -277,11 +331,18 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
         return false;
     }
 
-    private String getUserName(String id){
+
+    /**
+     * 根据id获取用户姓名
+     *
+     * @param id
+     * @return
+     */
+    private String getUserName(String id) {
         Map<String, Object> param = new HashMap<>();
         param.put("eqTaskId", id);
         AdminUser adminUser = adminUserMapper.selectByMap(param).get(0);
-        if (EmptyUtil.isNotEmpty(adminUser)){
+        if (EmptyUtil.isNotEmpty(adminUser)) {
             return adminUser.getUsername();
         }
         return null;
