@@ -16,6 +16,8 @@ public interface TaskInfoMapper {
 
     TaskInfo selectByPrimaryKey(Integer id);
 
+    TaskInfo selectByTaskId(String taskId);
+
     int updateByPrimaryKeySelective(TaskInfo record);
 
     int updateByPrimaryKey(TaskInfo record);
