@@ -2,6 +2,7 @@ package com.demo.dao;
 
 import com.demo.entity.TaskInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +23,9 @@ public interface TaskInfoMapper {
 
     int updateByPrimaryKey(TaskInfo record);
 
-    TaskInfo selectByMap(Map<String, Object> params);
+    List<TaskInfo> selectByMap(Map<String, Object> params);
 
     int updateMany(Map<String, Object> params);
+
+    List<TaskInfo> selectAttentionTask(String userId);
 }

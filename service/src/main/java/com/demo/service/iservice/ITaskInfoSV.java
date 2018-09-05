@@ -3,6 +3,8 @@ package com.demo.service.iservice;
 import com.demo.entity.TaskInfo;
 import com.demo.utils.common.GeneralException;
 
+import java.util.List;
+
 /**
  * @program: parent
  * @description: 任务详情接口
@@ -76,4 +78,20 @@ public interface ITaskInfoSV {
      */
     boolean deleteAllTask(String userid) throws GeneralException;
 
+
+    /**
+     * 获取我的任务接口
+     * @param userId
+     * @return
+     * @throws GeneralException
+     */
+    List<TaskInfo> taskList(String userId) throws GeneralException;
+
+    /**
+     * 获取我的关注列表
+     * @param userId
+     * @return
+     * @throws GeneralException
+     */
+    List<TaskInfo> attentionTaskList(String userId) throws GeneralException;
 }

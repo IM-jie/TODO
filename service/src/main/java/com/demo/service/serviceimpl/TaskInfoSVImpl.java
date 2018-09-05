@@ -57,7 +57,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
     public TaskInfo getOneTaskInfo(String taskId) throws GeneralException {
         Map<String, Object> param = new HashMap<>();
         param.put("eqTaskid", taskId);
-        return taskInfoMapper.selectByMap(param);
+        return taskInfoMapper.selectByMap(param).get(0);
     }
 
     /**
@@ -110,7 +110,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
     public boolean finishTask(String userId, String taskId) throws GeneralException {
         Map<String, Object> params = new HashMap<>();
         params.put("eqTaskid", taskId);
-        TaskInfo taskInfo = taskInfoMapper.selectByMap(params);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(params).get(0);
         if (EmptyUtil.isNotEmpty(taskInfo)) {
             throw new GeneralException("1", "任务不存在");
         }
@@ -156,7 +156,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
     public boolean transferTask(String taskId, String userId) throws GeneralException {
         Map<String, Object> params = new HashMap<>();
         params.put("eqTaskid", taskId);
-        TaskInfo taskInfo = taskInfoMapper.selectByMap(params);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(params).get(0);
         if (EmptyUtil.isNotEmpty(taskInfo)) {
             throw new GeneralException("1", "任务不存在");
         }
@@ -194,7 +194,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
     public boolean followTask(String taskId, String userId) throws GeneralException {
         Map<String, Object> param = new HashMap<>();
         param.put("eqTaskid", taskId);
-        TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(param).get(0);
         if (EmptyUtil.isEmpty(taskInfo)) {
             throw new GeneralException("0", "任务不存在");
         }
@@ -227,7 +227,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
     public boolean statTask(String userId, String taskId) throws GeneralException {
         Map<String, Object> param = new HashMap<>();
         param.put("eqTaskid", taskId);
-        TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(param).get(0);
         if (EmptyUtil.isEmpty(taskInfo)) {
             throw new GeneralException("0", "任务不存在");
         }
@@ -254,7 +254,7 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
     public boolean privateTask(String userId, String taskId) throws GeneralException {
         Map<String, Object> param = new HashMap<>();
         param.put("eqTaskid", taskId);
-        TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
+        TaskInfo taskInfo = taskInfoMapper.selectByMap(param).get(0);
         if (EmptyUtil.isEmpty(taskInfo)) {
             throw new GeneralException("0", "任务不存在");
         }
@@ -310,6 +310,30 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 获取我的任务接口
+     * @param userId
+     * @return
+     * @throws GeneralException
+     */
+    @Override
+    public List<TaskInfo> taskList(String userId) throws GeneralException {
+        Map<String, Object> param = new HashMap<>();
+        param.put("workerId", userId);
+        return taskInfoMapper.selectByMap(param);
+    }
+
+    /**
+     * 获取我的关注列表
+     * @param userId
+     * @return
+     * @throws GeneralException
+     */
+    @Override
+    public List<TaskInfo> attentionTaskList(String userId) throws GeneralException {
+        return taskInfoMapper.selectAttentionTask(userId);
     }
 
     /**

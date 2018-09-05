@@ -3,6 +3,7 @@ package com.demo.web.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.demo.entity.AdminUser;
 import com.demo.entity.TaskInfo;
+import com.demo.entity.common.PageResult;
 import com.demo.entity.common.Result;
 import com.demo.entity.enumerate.TaskStatusEnum;
 import com.demo.entity.param.TaskAddParam;
@@ -13,7 +14,6 @@ import com.demo.utils.common.GeneralException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -211,9 +211,9 @@ public class TaskController {
      * @apiVersion 0.0.1
      */
     @PostMapping("/transferTask")
-    public Result transferTask(@RequestAttribute(name = "loginUser") AdminUser adminUser,@RequestParam(name = "taskid") String taskid, @RequestParam(name = "userid") String userid) throws GeneralException{
+    public Result transferTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid, @RequestParam(name = "userid") String userid) throws GeneralException {
         try {
-            if (iTaskInfoSV.transferTask(taskid, userid)){
+            if (iTaskInfoSV.transferTask(taskid, userid)) {
                 return new Result(1, "成功");
             }
             return new Result(0, "失败");
@@ -235,13 +235,13 @@ public class TaskController {
      * @apiVersion 0.0.1
      */
     @PostMapping("/statTask")
-    public Result statTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException{
+    public Result statTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException {
         try {
-            if (iTaskInfoSV.statTask(adminUser.getUserId(), taskid)){
+            if (iTaskInfoSV.statTask(adminUser.getUserId(), taskid)) {
                 return new Result(1, "成功");
             }
             return new Result(0, "失败");
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.info("异常" + e);
             if (e instanceof GeneralException) {
                 return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
@@ -259,13 +259,13 @@ public class TaskController {
      * @apiVersion 0.0.1
      */
     @PostMapping("/privatetask")
-    public Result privateTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException{
+    public Result privateTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException {
         try {
-            if (iTaskInfoSV.privateTask(adminUser.getUserId(), taskid)){
+            if (iTaskInfoSV.privateTask(adminUser.getUserId(), taskid)) {
                 return new Result(1, "成功");
             }
             return new Result(0, "失败");
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.info("异常" + e);
             if (e instanceof GeneralException) {
                 return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
@@ -285,11 +285,11 @@ public class TaskController {
     @GetMapping("/finishalltask")
     public Result finishAllTask(@RequestAttribute(name = "loginUser") AdminUser adminUser) throws GeneralException {
         try {
-            if (iTaskInfoSV.finishAllTask(adminUser.getUserId())){
+            if (iTaskInfoSV.finishAllTask(adminUser.getUserId())) {
                 return new Result(1, "成功");
             }
             return new Result(0, "失败");
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.info("异常" + e);
             if (e instanceof GeneralException) {
                 return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
@@ -309,15 +309,52 @@ public class TaskController {
     @GetMapping("/deletealltask")
     public Result deleteAllTask(@RequestAttribute(name = "loginUser") AdminUser adminUser) throws GeneralException {
         try {
-            if (iTaskInfoSV.deleteAllTask(adminUser.getUserId())){
+            if (iTaskInfoSV.deleteAllTask(adminUser.getUserId())) {
                 return new Result(1, "成功");
             }
             return new Result(0, "失败");
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.info("异常" + e);
             if (e instanceof GeneralException) {
                 return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
             }
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 获取我的任务列表
+     * Author: huangjie
+     * @api {get} /mytodo/task 获取我的任务列表
+     * @apiName getTaskList
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @GetMapping("")
+    public PageResult getTaskList(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "start", defaultValue = "0") int start, @RequestParam(name = "limit", defaultValue = "10") int limit, @RequestParam(name = "page", defaultValue = "1") int page) throws GeneralException {
+        try {
+            return new PageResult(iTaskInfoSV.taskList(adminUser.getUserId()));
+        } catch (Exception e) {
+            LOGGER.info("异常" + e);
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 获取关注任务列表
+     * Author: huangjie
+     * @api {get} /mytodo/task/attentiontasklist 获取关注任务列表
+     * @apiName getAttentionTask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @GetMapping("/mytask")
+    public PageResult getAttentionTaskList(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "start", defaultValue = "0") int start, @RequestParam(name = "limit", defaultValue = "10") int limit, @RequestParam(name = "page", defaultValue = "1") int page) throws GeneralException {
+        try {
+
+            return new PageResult(iTaskInfoSV.attentionTaskList(adminUser.getUserId()));
+        } catch (Exception e) {
+            LOGGER.info("异常" + e);
             throw new GeneralException("系统错误");
         }
     }
