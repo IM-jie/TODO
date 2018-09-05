@@ -1,5 +1,6 @@
 package com.demo.service.iservice;
 
+import com.demo.entity.AdminUser;
 import com.demo.entity.common.PageResult;
 import com.demo.entity.ext.TaskRecordExt;
 
@@ -31,7 +32,9 @@ public interface ITaskRecordSV {
     /**
      * 删除操作记录
      * @param id
+     * @param loginUser
      * @return
      */
-    int deleteRecord(Integer id);
+    int deleteRecord(Integer id, AdminUser loginUser);
+
 }

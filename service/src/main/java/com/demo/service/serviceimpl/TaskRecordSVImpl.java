@@ -38,16 +38,20 @@ public class TaskRecordSVImpl implements ITaskRecordSV {
 
     @Override
     public List<TaskRecordExt> listRecordByTaskId(String taskId) {
-        Map<String,Object> params = new HashMap<>();
-        params.put("eqTaskId",taskId);
+        Map<String, Object> params = new HashMap<>();
+        params.put("eqTaskId", taskId);
         params.put("neqStatus", 0);
         return taskRecordMapper.selectExtByMap(params);
     }
 
     @Override
-    public int deleteRecord(Integer id) {
+    public int deleteRecord(Integer id,AdminUser loginUser) {
         TaskRecord taskRecord = taskRecordMapper.selectByPrimaryKey(id);
+        if(!taskRecord.getOperatorId().equals(loginUser.getUserId())) {
+            return 0;
+        }
         taskRecord.setStatus(0);
         return taskRecordMapper.updateByPrimaryKeySelective(taskRecord);
     }
+
 }
