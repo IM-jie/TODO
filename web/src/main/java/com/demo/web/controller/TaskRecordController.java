@@ -36,8 +36,8 @@ public class TaskRecordController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public Result deleteRecord(@PathVariable(name = "id") Integer id) {
-        if (0 != iTaskRecordSV.deleteRecord(id)) {
+    public Result deleteRecord(@PathVariable(name = "id") Integer id,@RequestAttribute(name = "loginUser") AdminUser loginUser) {
+        if (0 != iTaskRecordSV.deleteRecord(id,loginUser)) {
             return ResultUtil.success(1001, "删除成功");
         } else {
             return ResultUtil.error(1002, "删除失败");
