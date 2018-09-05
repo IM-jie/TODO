@@ -153,14 +153,167 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/followTask/taskid")
-    public Result followTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @PathVariable(name = "taskid") String taskid) throws GeneralException {
-        try{
-            if (iTaskInfoSV.followTask(taskid,adminUser.getUserId())){
-                return new Result(1,"成功");
+
+    /**
+     * @apiDescription 添加任务接口
+     * Author: huangjie
+     * @api {post} /mytodo/task/followTask 任务获取接口
+     * @apiName followTask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @PostMapping("/followTask")
+    public Result followTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException {
+        try {
+            if (iTaskInfoSV.followTask(taskid, adminUser.getUserId())) {
+                return new Result(1, "成功");
             }
-            return new Result(0,"失败");
-        }catch (Exception e){
+            return new Result(0, "失败");
+        } catch (Exception e) {
+            LOGGER.info("异常" + e);
+            if (e instanceof GeneralException) {
+                return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
+            }
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 完成、撤销完成任务接口
+     * Author: huangjie
+     * @api {post} /mytodo/task/iffinishTask 完成、撤销完成任务接口
+     * @apiName ifFinishTask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @PostMapping("/iffinishTask")
+    public Result ifFinishTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException {
+        try {
+            if (iTaskInfoSV.finishTask(adminUser.getUserId(), taskid)) {
+                return new Result(1, "成功");
+            }
+            return new Result(0, "失败");
+        } catch (Exception e) {
+            LOGGER.info("异常" + e);
+            if (e instanceof GeneralException) {
+                return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
+            }
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 转让任务接口
+     * Author: huangjie
+     * @api {post} /mytodo/task/transferTask 转让任务接口
+     * @apiName transferTask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @PostMapping("/transferTask")
+    public Result transferTask(@RequestAttribute(name = "loginUser") AdminUser adminUser,@RequestParam(name = "taskid") String taskid, @RequestParam(name = "userid") String userid) throws GeneralException{
+        try {
+            if (iTaskInfoSV.transferTask(taskid, userid)){
+                return new Result(1, "成功");
+            }
+            return new Result(0, "失败");
+        } catch (Exception e) {
+            LOGGER.info("异常" + e);
+            if (e instanceof GeneralException) {
+                return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
+            }
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 星标、取消星标任务接口
+     * Author: huangjie
+     * @api {post} /mytodo/task/statTask 星标、取消星标任务接口
+     * @apiName statTask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @PostMapping("/statTask")
+    public Result statTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException{
+        try {
+            if (iTaskInfoSV.statTask(adminUser.getUserId(), taskid)){
+                return new Result(1, "成功");
+            }
+            return new Result(0, "失败");
+        }catch (Exception e) {
+            LOGGER.info("异常" + e);
+            if (e instanceof GeneralException) {
+                return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
+            }
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 私有任务、取消私有接口
+     * Author: huangjie
+     * @api {post} /mytodo/task/privateTask 私有任务、取消私有接口
+     * @apiName privateTask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @PostMapping("/privatetask")
+    public Result privateTask(@RequestAttribute(name = "loginUser") AdminUser adminUser, @RequestParam(name = "taskid") String taskid) throws GeneralException{
+        try {
+            if (iTaskInfoSV.privateTask(adminUser.getUserId(), taskid)){
+                return new Result(1, "成功");
+            }
+            return new Result(0, "失败");
+        }catch (Exception e) {
+            LOGGER.info("异常" + e);
+            if (e instanceof GeneralException) {
+                return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
+            }
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 完成所有未完成任务
+     * Author: huangjie
+     * @api {get} /mytodo/task/finishalltask 完成所有未完成任务
+     * @apiName finishalltask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @GetMapping("/finishalltask")
+    public Result finishAllTask(@RequestAttribute(name = "loginUser") AdminUser adminUser) throws GeneralException {
+        try {
+            if (iTaskInfoSV.finishAllTask(adminUser.getUserId())){
+                return new Result(1, "成功");
+            }
+            return new Result(0, "失败");
+        }catch (Exception e) {
+            LOGGER.info("异常" + e);
+            if (e instanceof GeneralException) {
+                return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());
+            }
+            throw new GeneralException("系统错误");
+        }
+    }
+
+    /**
+     * @apiDescription 删除所有完成任务
+     * Author: huangjie
+     * @api {get} /mytodo/task/deletealltask 删除所有完成任务
+     * @apiName deletealltask
+     * @apiGroup task
+     * @apiVersion 0.0.1
+     */
+    @GetMapping("/deletealltask")
+    public Result deleteAllTask(@RequestAttribute(name = "loginUser") AdminUser adminUser) throws GeneralException {
+        try {
+            if (iTaskInfoSV.deleteAllTask(adminUser.getUserId())){
+                return new Result(1, "成功");
+            }
+            return new Result(0, "失败");
+        }catch (Exception e) {
             LOGGER.info("异常" + e);
             if (e instanceof GeneralException) {
                 return new Result(Integer.parseInt(((GeneralException) e).getErrorCode()), e.getMessage());

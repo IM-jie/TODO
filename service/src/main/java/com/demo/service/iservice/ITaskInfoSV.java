@@ -30,7 +30,7 @@ public interface ITaskInfoSV {
      * @return
      * @description: 完成任务或者撤销完成任务
      */
-    boolean finishTask(String taskId) throws GeneralException;
+    boolean finishTask(String userId, String taskId) throws GeneralException;
 
     /**
      * @param taskId
@@ -49,18 +49,20 @@ public interface ITaskInfoSV {
     boolean followTask(String taskId, String userId) throws GeneralException;
 
     /**
+     * @param userId
      * @param taskId
      * @return
      * @description:星标任务、取消星标任务
      */
-    boolean statTask(String taskId) throws GeneralException;
+    boolean statTask(String userId, String taskId) throws GeneralException;
 
     /**
+     * @param userId
      * @param taskId
      * @return
      * @description:私有任务、 取消私有任务
      */
-    boolean privateTask(String taskId) throws GeneralException;
+    boolean privateTask(String userId, String taskId) throws GeneralException;
 
     /**
      * @return

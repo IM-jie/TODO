@@ -107,12 +107,15 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description: 完成任务或者撤销完成任务
      */
     @Override
-    public boolean finishTask(String taskId) throws GeneralException {
+    public boolean finishTask(String userId, String taskId) throws GeneralException {
         Map<String, Object> params = new HashMap<>();
         params.put("eqTaskid", taskId);
         TaskInfo taskInfo = taskInfoMapper.selectByMap(params);
         if (EmptyUtil.isNotEmpty(taskInfo)) {
             throw new GeneralException("1", "任务不存在");
+        }
+        if (!taskInfo.getWorkerId().equals(userId)){
+            throw new GeneralException("1", "任务负责人出错");
         }
         if (EmptyUtil.isNotEmpty(taskInfo.getWorker())) {
             taskInfo.setFinisher(null);
@@ -221,12 +224,15 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:星标任务、取消星标任务
      */
     @Override
-    public boolean statTask(String taskId) throws GeneralException {
+    public boolean statTask(String userId, String taskId) throws GeneralException {
         Map<String, Object> param = new HashMap<>();
         param.put("eqTaskid", taskId);
         TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
         if (EmptyUtil.isEmpty(taskInfo)) {
             throw new GeneralException("0", "任务不存在");
+        }
+        if (!taskInfo.getWorkerId().equals(userId)){
+            throw new GeneralException("1", "任务负责人出错");
         }
         if (taskInfo.getMarkStatus().equals(TaskStatusEnum.MARK_FALSE.getCode())) {
             taskInfo.setMarkStatus(TaskStatusEnum.MARK_TRUE.getCode());
@@ -245,12 +251,15 @@ public class TaskInfoSVImpl implements ITaskInfoSV {
      * @description:私有任务、 取消私有任务
      */
     @Override
-    public boolean privateTask(String taskId) throws GeneralException {
+    public boolean privateTask(String userId, String taskId) throws GeneralException {
         Map<String, Object> param = new HashMap<>();
         param.put("eqTaskid", taskId);
         TaskInfo taskInfo = taskInfoMapper.selectByMap(param);
         if (EmptyUtil.isEmpty(taskInfo)) {
             throw new GeneralException("0", "任务不存在");
+        }
+        if (!taskInfo.getWorkerId().equals(userId)){
+            throw new GeneralException("1", "任务负责人出错");
         }
         if (taskInfo.getMarkStatus().equals(TaskStatusEnum.PRIVATE_FALSE.getCode())) {
             taskInfo.setMarkStatus(TaskStatusEnum.PRIVATE_TRUE.getCode());
