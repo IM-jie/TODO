@@ -152,7 +152,12 @@
             </if>
         </if>
     </select>
-
+    <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admin_user
+        where username=#{operator,jdbcType=VARCHAR}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_admin_user
     where id = #{id,jdbcType=INTEGER}

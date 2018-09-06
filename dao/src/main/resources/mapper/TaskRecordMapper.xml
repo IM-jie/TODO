@@ -10,9 +10,16 @@
         <result column="operator" property="operator" jdbcType="VARCHAR"/>
         <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="operator_id" property="operatorId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ExtResultMap" extends="BaseResultMap" type="com.demo.entity.ext.TaskRecordExt">
+        <collection property="user" ofType="com.demo.entity.AdminUser" javaType="com.demo.entity.AdminUser"
+                    select="com.demo.dao.AdminUserMapper.selectByUserName" column="operator"/>
+        <collection property="taskInfo" ofType="com.demo.entity.TaskInfo" javaType="com.demo.entity.TaskInfo"
+                    select="com.demo.dao.TaskInfoMapper.selectByTaskId" column="task_id"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, record_id, task_id, operate_type, operate, operator, operate_time, status
+    id, record_id, task_id, operate_type, operate, operator, operate_time, status, operator_id
   </sql>
     <sql id="ByMap_Where_Clause">
         <where>
@@ -43,6 +50,9 @@
             <if test="neqStatus != null">
                 AND status != #{neqStatus,jdbcType=TINYINT}
             </if>
+            <if test="eqOperatorId != null">
+                AND operator_id = #{eqOperatorId,jdbcType=VARCHAR}
+            </if>
         </where>
     </sql>
     <sql id="ByMap_Set_Clause">
@@ -68,6 +78,9 @@
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT}
             </if>
+            <if test="operatorId != null">
+                operator_id = #{operatorId,jdbcType=VARCHAR}
+            </if>
         </set>
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -77,6 +90,17 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_task_record
+        <if test="_parameter != null">
+            <include refid="ByMap_Where_Clause"/>
+            <if test="orderByClause != null">
+                order by ${orderByClause}
+            </if>
+        </if>
+    </select>
+    <select id="selectExtByMap" parameterType="java.util.Map" resultMap="ExtResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_task_record
@@ -97,10 +121,10 @@
         </selectKey>
         insert into t_task_record (record_id, task_id, operate_type,
         operate, operator, operate_time,
-        status)
+        status, operator_id)
         values (#{recordId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{operateType,jdbcType=TINYINT},
         #{operate,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP},
-        #{status,jdbcType=TINYINT})
+        #{status,jdbcType=TINYINT}, #{operatorId,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.demo.entity.TaskRecord">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
@@ -129,6 +153,9 @@
             <if test="status != null">
                 status,
             </if>
+            <if test="operatorId != null">
+                operator_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="recordId != null">
@@ -151,6 +178,9 @@
             </if>
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
+            </if>
+            <if test="operatorId != null">
+                #{operatorId,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -178,6 +208,9 @@
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
             </if>
+            <if test="operatorId != null">
+                operator_id = #{operatorId,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -189,7 +222,8 @@
       operate = #{operate,jdbcType=VARCHAR},
       operator = #{operator,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=TINYINT}
+      status = #{status,jdbcType=TINYINT},
+      operator_id = #{operatorId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
     <update id="updateByMap" parameterType="java.util.Map">

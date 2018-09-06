@@ -136,11 +136,20 @@
       </if>
     </set>
   </sql>
+  <select id="selectAttentionTask" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select a.* from t_task_info a,t_task_user b where a.task_id=b.task_id and b.user_id = #{userId,jdbcType=VARCHAR};
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_task_info
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByTaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_task_info
+    where task_id=#{task_id,jdbcType=VARCHAR}
   </select>
   <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
     select
@@ -360,5 +369,20 @@
       finisher_id = #{finisherId,jdbcType=VARCHAR},
       worker_id = #{workerId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateMany" parameterType="java.util.Map">
+    update t_task_info
+    <set>
+      <if test="finisher != null" >
+        finisher = #{finisher,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="privateStatus != null" >
+        private_status = #{privateStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where worker_id = #{workerId,jdbcType=VARCHAR}
   </update>
 </mapper>

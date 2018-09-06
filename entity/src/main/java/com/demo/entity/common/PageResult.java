@@ -23,11 +23,6 @@ public class PageResult <T> implements Serializable {
     private Long total;
 
     /**
-     * 结果集
-     */
-    private List<T> data;
-
-    /**
      * 页数
      */
     private Integer pageNum;
@@ -42,8 +37,13 @@ public class PageResult <T> implements Serializable {
      */
     private Integer pages;
 
-    public PageResult(List<T> rows) {
-        init(rows);
+    /**
+     * 结果集
+     */
+    private List<T> data;
+
+    public PageResult(List<T> data) {
+        init(data);
     }
 
     public static long getSerialVersionUID() {
@@ -58,11 +58,11 @@ public class PageResult <T> implements Serializable {
         this.total = total;
     }
 
-    public List<T> getRows() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setRows(List<T> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 
@@ -93,7 +93,11 @@ public class PageResult <T> implements Serializable {
     /**
      * 初始化
      *
+<<<<<<< HEAD
      * @param：rows
+=======
+     * @param data
+>>>>>>> a388e65fed368697a8b122495edae41f5d3a8756
      */
     private void init(List<T> data) {
         if (data instanceof Page) {

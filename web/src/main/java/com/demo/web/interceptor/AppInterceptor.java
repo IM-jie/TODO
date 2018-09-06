@@ -44,18 +44,21 @@ public class AppInterceptor implements HandlerInterceptor {
 //            httpServletResponse.setContentType("application/json; charset=utf-8");
 //            httpServletResponse.getWriter().write(result.toString());
 //            return false;
+            LOGGER.info("上面");
             AdminUser loginUser = new AdminUser();
+            loginUser.setId(12);
             loginUser.setUsername("admin");
             loginUser.setUserId("12345678");
             loginUser.setPermissionId(0);
             String string=PasswordCryptoUtil.encode("userinfo:admin");
-            Cookie cookie = new Cookie("Info_side", string);
+            Cookie cookie = new Cookie(CommonConstants.COOKIE_KEY, string);
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);
             httpServletResponse.addCookie(cookie);
             httpServletRequest.setAttribute("loginUser", loginUser);
             return true;
         } else {
+            LOGGER.info("下面");
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(CommonConstants.COOKIE_KEY)) {
                     String str = PasswordCryptoUtil.decode(cookie.getValue());

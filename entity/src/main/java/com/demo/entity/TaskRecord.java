@@ -23,6 +23,8 @@ public class TaskRecord implements Serializable {
 
     private Integer status;
 
+    private String operatorId;
+
     public Integer getId() {
         return id;
     }
@@ -87,6 +89,14 @@ public class TaskRecord implements Serializable {
         this.status = status;
     }
 
+    public String getOperatorId() {
+        return operatorId;
+    }
+
+    public void setOperatorId(String operatorId) {
+        this.operatorId = operatorId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -101,6 +111,7 @@ public class TaskRecord implements Serializable {
         sb.append(", operator=").append(operator);
         sb.append(", operateTime=").append(operateTime);
         sb.append(", status=").append(status);
+        sb.append(", operatorId=").append(operatorId);
         sb.append("]");
         return sb.toString();
     }
