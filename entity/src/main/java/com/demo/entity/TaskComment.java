@@ -7,6 +7,7 @@ import java.util.Date;
  * @author mac
  */
 public class TaskComment implements Serializable {
+
     private Integer id;
 
     private String commentId;
@@ -93,4 +94,5 @@ public class TaskComment implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
 }

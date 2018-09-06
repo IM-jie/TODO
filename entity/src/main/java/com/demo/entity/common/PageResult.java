@@ -93,7 +93,7 @@ public class PageResult <T> implements Serializable {
     /**
      * 初始化
      *
-     * @param rows
+     * @param：rows
      */
     private void init(List<T> data) {
         if (data instanceof Page) {
